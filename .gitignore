@@ -5,6 +5,7 @@ Makefile
 cmake_install.cmake
 install_manifest.txt
 *.cmake
+cmake-build-debug/
 
 # Répertoires de build ou d'autres répertoires temporaires
 build/
