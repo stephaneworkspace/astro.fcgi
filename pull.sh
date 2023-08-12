@@ -12,6 +12,6 @@ else
   git add .
   git commit -m "build"
   git push
-  ssh ubuntu@astrologie-traditionnelle.net "sudo rm -rf /home/ubuntu/www/astro.fcgi && cd /home/ubuntu/www && git clone git@github.com:stephaneworkspace/astro.fcgi.git && cd /home/ubuntu/www/astro.fcgi && git pull && sudo rm -rf /var/www/astro.fcgi/bin && sudo cp -r /home/ubuntu/www/astro.fcgi/bin /var/www/astro.fcgi && sudo chown -R 775 bin && sudo chown -R www-data:www-data bin"
+  ssh ubuntu@astrologie-traditionnelle.net "sudo rm -rf /home/ubuntu/www/astro.fcgi && cd /home/ubuntu/www && git clone git@github.com:stephaneworkspace/astro.fcgi.git && cd /home/ubuntu/www/astro.fcgi && git pull && sudo rm -rf /var/www/astro.fcgi/bin && sudo cp -r /home/ubuntu/www/astro.fcgi/bin /var/www/astro.fcgi && sudo chown -R 775 bin && sudo chown -R www-data:www-data bin && sudo chmod +x /var/www/astro.fcgi/bin/astro.fcgi"
   echo "done"
 fi
