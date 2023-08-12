@@ -15,7 +15,6 @@ using namespace std;
     int main(void)
 #endif
 {
-    std::cerr << "Information de log ici." << endl;
     // Initialisation FastCGI
     FCGX_Init();
     FCGX_Request request;
@@ -31,6 +30,7 @@ using namespace std;
     string qS = string(queryString);
     string lat;
     string lng;
+    std::cerr << "Information de log ici 1." << endl;
     if (queryString) {
         map<string, string> params = Util::parseQueryString(qS);
         string lat = params["lat"];
@@ -55,6 +55,7 @@ using namespace std;
         f_lng = 0.0;
     }
 
+    std::cerr << "Information de log ici 2." << endl;
 
 #if SW_DEBUG
     while (FCGI_Accept() >= 0) {
