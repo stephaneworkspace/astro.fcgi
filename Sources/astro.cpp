@@ -43,6 +43,8 @@ using namespace std;
         string gmt = params["gmt"].c_str();
         string color = params["color"].c_str();
         string aspect_option = params["aspect_option"].c_str();
+        bool sw_chart = 1;
+        bool sw_json = 0;
 #else
     while (FCGX_Accept_r(&request) == 0) {
         const char* queryString = FCGX_GetParam("QUERY_STRING", request.envp);
@@ -57,6 +59,8 @@ using namespace std;
         string gmt;
         string color;
         string aspect_option;
+        bool sw_chart;
+        bool sw_json;
         if (queryString) {
             map<string, string> params = Util::parseQueryString(qS);
             year = params["year"];
@@ -69,6 +73,8 @@ using namespace std;
             gmt = params["gmt"];
             color = params["color"];
             aspect_option = params["aspect_option"];
+            sw_chart = params["sw_chart"] == "true" ? true : false;
+            sw_json = params["sw_json"] == "true" ? true : false;
         }
 #endif
         Swe sweInstance(year, month, day, hour, min, lat, lng, gmt, color, aspect_option);
@@ -84,15 +90,21 @@ using namespace std;
         cout << sweInstance.getAo() << endl;
         FCGX_Finish_r(&request);
 #else
-        FCGX_PutS("Content-type: text/html\r\n", request.out);
-        FCGX_PutS("\r\n", request.out);
-        FCGX_PutS("<html><head><title>FastCGI Hello!</title></head><body>", request.out);
-        FCGX_PutS("<h1>Params</h1>", request.out);
-        //char buffer[256];
-        //snprintf(buffer, sizeof(buffer), "<p>lat : %.2f</p>", f_lat);
-        //FCGX_PutS(buffer, request.out);
-        //FCGX_PutS("<p>lng : %.2f</p>", f_lng);
-        FCGX_PutS("</body></html>", request.out);
+        if (sw_chart) {
+
+        } else if (sw_json) {
+
+        } else {
+            FCGX_PutS("Content-type: text/html\r\n", request.out);
+            FCGX_PutS("\r\n", request.out);
+            FCGX_PutS("<html><head><title>FastCGI Hello!</title></head><body>", request.out);
+            FCGX_PutS("<h1>Params</h1>", request.out);
+            //char buffer[256];
+            //snprintf(buffer, sizeof(buffer), "<p>lat : %.2f</p>", f_lat);
+            //FCGX_PutS(buffer, request.out);
+            //FCGX_PutS("<p>lng : %.2f</p>", f_lng);
+            FCGX_PutS("</body></html>", request.out);
+        }
         FCGX_Finish_r(&request);
 #endif
     }
