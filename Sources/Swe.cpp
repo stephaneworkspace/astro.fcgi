@@ -95,6 +95,7 @@ const string Swe::Svg() {
 }
 #define FILE FCGI_FILE
 #define fgetc FCGI_fgetc
+#include <nlohmann/json.hpp>
 const string Swe::Json() {
     Swe02::set_ephe_path("./");
     // TimeZone
