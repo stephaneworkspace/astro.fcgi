@@ -8,12 +8,13 @@
 #include <utility>
 #include <string>
 #include <vector>
+#include "nlohmann/json.hpp"
 #include "swelib.h"
-#include "Util.h"
+#include "../Util/Util.h"
 #include "sweinterfacelib.h"
 
 using namespace std;
-//using json = nlohmann::json;
+using json = nlohmann::json;
 using namespace sweinterfacelib;
 
 class Swe {

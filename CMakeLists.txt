@@ -84,15 +84,17 @@ set(SWEBRESSANIDEVLIB_HEADERS
         ${swe_bressani_dev_SOURCE_DIR}/Sources/sweinterfacelib/include/sweinterfacelib.h
         )
 
+# Contournement d'erreur de compilation entre nlohmann_json et fcgi
+add_library(swe STATIC ${CMAKE_SOURCE_DIR}/Sources/Lib/Swe/Swe.cpp)
+target_link_libraries(swe PRIVATE nlohmann_json::nlohmann_json)
+add_library(util STATIC ${CMAKE_SOURCE_DIR}/Sources/Lib/Util/Util.cpp)
 
 # Spécifiez la source à compiler
 add_executable(astro.fcgi
         Sources/astro.cpp
         ${SWEBRESSANIDEVLIB_HEADERS}
         ${SWEBRESSANIDEVLIB_SOURCES}
-        Sources/Util.h
-        Sources/Util.cpp Sources/Swe.h Sources/Swe.cpp)
-
+        )
 # Lien avec la bibliothèque libfcgi. Homebrew installe généralement les bibliothèques dans /usr/local/lib
 link_directories(/usr/local/lib)
 
@@ -105,4 +107,6 @@ target_include_directories(astro.fcgi PRIVATE
 target_link_libraries(astro.fcgi PRIVATE
         fcgi
         nlohmann_json::nlohmann_json
+        swe
+        util
         )

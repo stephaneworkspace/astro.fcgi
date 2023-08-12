@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <string>
 #include "fcgio.h"
-#include "Util.h"
-#include "Swe.h"
+#include "Lib/Util/Util.h"
+#include "Lib/Swe/Swe.h"
 
 using namespace std;
 
