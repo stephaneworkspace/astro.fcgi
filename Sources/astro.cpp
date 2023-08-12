@@ -33,19 +33,37 @@
     }
 #endif
 
+    double f_lat = 0.0;
+    try {
+        f_lat = stof(lat);
+    } catch (const invalid_argument& ia) {
+        f_lat = 0.0;
+    } catch (const out_of_range& oor) {
+        f_lat = 0.0;
+    }
+    double f_lng = 0.0;
+    try {
+        f_lng = stof(lng);
+    } catch (const invalid_argument& ia) {
+        f_lng = 0.0;
+    } catch (const out_of_range& oor) {
+        f_lng = 0.0;
+    }
+
+
 #if SW_DEBUG
     while (FCGI_Accept() >= 0) {
 #else
     while (FCGX_Accept_r(&request) == 0) {
 #endif
-        Swe sweInstance(2000, 5, 15, 12, 30, 45.67, 5.78, 1);
+        Swe sweInstance(2000, 5, 15, 12, 30, f_lat, f_lng, 1);
 
         printf("Content-type: text/html\r\n");
         printf("\r\n");
         printf("<html><head><title>FastCGI Hello!</title></head><body>");
         printf("<h1>Params</h1>");
-        printf("<p>lat : %s</p>", lat.c_str());
-        printf("<p>lng : %s</p>", lng.c_str());
+        printf("<p>lat : %.2f</p>", f_lat);
+        printf("<p>lng : %.2f</p>", f_lng);
         printf("</body></html>");
         FCGX_Finish_r(&request);
     }
