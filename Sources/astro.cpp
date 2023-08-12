@@ -15,6 +15,7 @@ using namespace std;
     int main(void)
 #endif
 {
+    std::cerr << "Information de log ici." << endl;
     // Initialisation FastCGI
     FCGX_Init();
     FCGX_Request request;
