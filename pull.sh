@@ -15,7 +15,7 @@ else
         mkdir /home/ubuntu/www/astro.fcgi/build
 
         cd /home/ubuntu/www/astro.fcgi/build
-        cp /home/ubuntu/ephem/*.sel /home/ubuntu/www/astro.fcgi/build/
+        cp /home/ubuntu/ephem/*.se1 /home/ubuntu/www/astro.fcgi/build/
 
         cmake -DSW_DEBUG=0 ..
         make
