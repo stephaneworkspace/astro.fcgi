@@ -28,6 +28,7 @@ using namespace std;
 #else
     std::cerr << "Information de log ici 0." << endl;
     char* queryString = FCGX_GetParam("QUERY_STRING", request.envp);
+    std::cerr << "Information de log ici 00." << endl;
     string qS = string(queryString);
     string lat;
     string lng;
