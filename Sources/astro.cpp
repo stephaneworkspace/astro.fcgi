@@ -30,6 +30,7 @@ using namespace std;
     char* queryString = FCGX_GetParam("QUERY_STRING", request.envp);
     std::cerr << "Information de log ici 00." << endl;
     string qS = string(queryString);
+    std::cerr << "Information de log ici 000." << endl;
     string lat;
     string lng;
     std::cerr << "Information de log ici 1." << endl;
