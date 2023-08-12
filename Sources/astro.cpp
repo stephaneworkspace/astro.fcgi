@@ -29,10 +29,12 @@ using namespace std;
     while (FCGX_Accept_r(&request) == 0) {
         const char* queryString = FCGX_GetParam("QUERY_STRING", request.envp);
         string qS = queryString ? string(queryString) : "";
+        string lat;
+        string lng;
         if (queryString) {
             map<string, string> params = Util::parseQueryString(qS);
-            string lat = params["lat"];
-            string lng = params["lng"];
+            lat = params["lat"];
+            lng = params["lng"];
         }
 #endif
         double f_lat = 0.0;
