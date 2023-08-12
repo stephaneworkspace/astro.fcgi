@@ -18,7 +18,7 @@ else
         cp /home/ubuntu/ephem/*.se1 /home/ubuntu/www/astro.fcgi/build/
 
         cmake -DSW_DEBUG=0 ..
-        make
+        kmake astro.fcgi
 
         sudo rm -rf /var/www/astro.fcgi/build
         sudo cp -r /home/ubuntu/www/astro.fcgi/build /var/www/astro.fcgi
