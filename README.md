@@ -37,6 +37,7 @@ cd build
 
 \```
 cmake ..
+make astro.fcgi
 \```
 
 3. **Compilez le projet**:
@@ -45,4 +46,4 @@ cmake ..
 make
 \```
 
-Après la compilation, l'exécutable `astro.fcgi` sera disponible dans le répertoire `build`.
+Après la compilation, l'exécutable `astro.fcgi` sera disponible dans le répertoire `build/bin`.
