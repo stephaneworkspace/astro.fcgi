@@ -25,11 +25,13 @@ FetchContent_Declare(
         GIT_TAG main
 )
 
-FetchContent_Declare(
-        jsoncpp
-        URL https://github.com/open-source-parsers/jsoncpp/archive/refs/tags/1.9.5.tar.gz
-        DOWNLOAD_EXTRACT_TIMESTAMP true
-)
+#FetchContent_Declare(
+#        jsoncpp
+#        URL https://github.com/open-source-parsers/jsoncpp/archive/refs/tags/1.9.5.tar.gz
+#        DOWNLOAD_EXTRACT_TIMESTAMP true
+#)
+
+FetchContent_Declare(jsoncpp URL https://github.com/open-source-parsers/jsoncpp/archive/refs/tags/1.9.5.tar.gz)
 
 FetchContent_GetProperties(swe_bressani_dev)
 if(NOT swe_bressani_dev_POPULATED)
