@@ -30,7 +30,8 @@ using namespace std;
                 "&lat=" + string(argv[6]) +
                 "&lng=" + string(argv[7]) +
                 "&gmt=" + string(argv[8]) +
-                "&color=" + string(argv[9]);
+                "&color=" + string(argv[9]) +
+                "&aspect_option=" + string(argv[10]);
         map<string, string> params = Util::parseQueryString(simulatedQueryString);
         string year = params["year"].c_str();
         string month = params["month"].c_str();
@@ -41,6 +42,7 @@ using namespace std;
         string lng = params["lng"].c_str();
         string gmt = params["gmt"].c_str();
         string color = params["color"].c_str();
+        string aspect_option = params["aspect_option"].c_str();
 #else
     while (FCGX_Accept_r(&request) == 0) {
         const char* queryString = FCGX_GetParam("QUERY_STRING", request.envp);
@@ -54,6 +56,7 @@ using namespace std;
         string lng;
         string gmt;
         string color;
+        string aspect_option;
         if (queryString) {
             map<string, string> params = Util::parseQueryString(qS);
             year = params["year"];
@@ -65,9 +68,10 @@ using namespace std;
             lng = params["lng"];
             gmt = params["gmt"];
             color = params["color"];
+            aspect_option = params["aspect_option"];
         }
 #endif
-        Swe sweInstance(year, month, day, hour, min, lat, lng, gmt, color, "0");
+        Swe sweInstance(year, month, day, hour, min, lat, lng, gmt, color, aspect_option);
 
 #if SW_DEBUG
         printf("Content-type: text/html\r\n");
