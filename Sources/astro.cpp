@@ -2,9 +2,12 @@
 #include <fcgi_stdio.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string>
 #include "fcgio.h"
 #include "Util.h"
 #include "Swe.h"
+
+using namespace std;
 
 #if SW_DEBUG
     int main(int argc, char* argv[])
@@ -27,9 +30,9 @@
     string lat;
     string lng;
     if (queryString) {
-        std::map<std::string, std::string> params = Util::parseQueryString(str(queryString));
-        std::string lat = params["lat"];
-        std::string lng = params["lng"];
+        map<string, string> params = Util::parseQueryString(str(queryString));
+        string lat = params["lat"];
+        sstring lng = params["lng"];
     }
 #endif
 
