@@ -9,6 +9,8 @@ else
         git clone git@github.com:stephaneworkspace/astro.fcgi.git
         cd /home/ubuntu/www/astro.fcgi
 
+        git pull
+
         rm -rf /home/ubuntu/www/astro.fcgi/build
         mkdir /home/ubuntu/www/astro.fcgi/build
 
@@ -16,7 +18,6 @@ else
 
         cmake ..
         make
-        git pull
 
         sudo rm -rf /var/www/astro.fcgi/build
         sudo cp -r /home/ubuntu/www/astro.fcgi/build /var/www/astro.fcgi
