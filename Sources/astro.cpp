@@ -1,10 +1,10 @@
 #include <fcgi_stdio.h>
+#include "fcgio.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
-#include "fcgio.h"
 #include "Util.h"
-#include "Swe.h"
+#include <SweBressaniDevCpp.h>
 
 using namespace std;
 
@@ -20,6 +20,10 @@ using namespace std;
     FCGX_InitRequest(&request, 0, 0);
 
 #if SW_DEBUG
+    if (argc != 10 + 1) {
+        std::cerr << "Manque les arguments" << std::endl;
+        return 1;
+    }
     while (FCGI_Accept() >= 0) {
         string simulatedQueryString =
                 "year=" + string(argv[1]) +
@@ -32,7 +36,7 @@ using namespace std;
                 "&gmt=" + string(argv[8]) +
                 "&color=" + string(argv[9]) +
                 "&aspect_option=" + string(argv[10]);
-        map<string, string> params = Util::parseQueryString(simulatedQueryString);
+        map<string, string> params = SweBressaniDevCpp::parseQueryString(simulatedQueryString);
         string year = params["year"].c_str();
         string month = params["month"].c_str();
         string day = params["day"].c_str();
@@ -77,7 +81,7 @@ using namespace std;
             sw_json = params["sw_json"] == "true" ? true : false;
         }
 #endif
-        Swe sweInstance(year, month, day, hour, min, lat, lng, gmt, color, aspect_option);
+        SweBressaniDevCpp sweInstance(year, month, day, hour, min, lat, lng, gmt, color, aspect_option);
 
         if (sw_chart) {
             const string svgOutput = sweInstance.Svg();
