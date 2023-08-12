@@ -5,13 +5,13 @@
 #ifndef ASTRO_FCGI_SWE_H
 #define ASTRO_FCGI_SWE_H
 
-#include <nlohmann/json.hpp>
 #include <utility>
 #include <string>
 #include <vector>
 #include "swelib.h"
 #include "Util.h"
 #include "sweinterfacelib.h"
+#include <nlohmann/json.hpp>
 
 using namespace std;
 using json = nlohmann::json;

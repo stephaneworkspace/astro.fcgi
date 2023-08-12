@@ -292,5 +292,6 @@ const string Swe::Json() {
             }
         }
     }
-    return js.dump();
+    return "";
+    //return js.dump();
 }
