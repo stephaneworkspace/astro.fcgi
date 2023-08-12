@@ -1,4 +1,3 @@
-#define SW_DEBUG 1 // Pour debugger le programme, en production -> SW_DEBUG 0
 #include <fcgi_stdio.h>
 #include <stdio.h>
 #include <stdlib.h>

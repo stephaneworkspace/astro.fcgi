@@ -7,6 +7,8 @@ set(CMAKE_C_COMPILER "clang")
 set(CMAKE_CXX_COMPILER "clang++")
 if(DEFINED SW_DEBUG)
     add_definitions(-DSW_DEBUG=${SW_DEBUG})
+else ()
+    add_definitions(-DSW_DEBUG=1)
 endif()
 
 # Nom du projet
