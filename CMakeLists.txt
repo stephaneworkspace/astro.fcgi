@@ -25,7 +25,11 @@ FetchContent_Declare(
         GIT_TAG main
 )
 
-FetchContent_Declare(jsoncpp URL https://github.com/open-source-parsers/jsoncpp/archive/refs/tags/1.9.5.tar.gz)
+FetchContent_Declare(
+        jsoncpp
+        URL https://github.com/open-source-parsers/jsoncpp/archive/refs/tags/1.9.5.tar.gz
+        DOWNLOAD_EXTRACT_TIMESTAMP true
+)
 
 FetchContent_GetProperties(swe_bressani_dev)
 if(NOT swe_bressani_dev_POPULATED)
@@ -36,6 +40,13 @@ if(NOT swe_bressani_dev_POPULATED)
 endif()
 
 FetchContent_MakeAvailable(jsoncpp)
+
+FetchContent_GetProperties(jsoncpp)
+if(NOT jsoncpp_POPULATED)
+    FetchContent_Populate(jsoncpp)
+    include_directories(${jsoncpp_SOURCE_DIR}/include)
+endif()
+
 
 set(SWEBRESSANIDEVLIB_SOURCES
         ${swe_bressani_dev_SOURCE_DIR}/Sources/swelib/swecl.c
@@ -99,10 +110,10 @@ target_include_directories(astro.fcgi PRIVATE
         ${swe_bressani_dev_SOURCE_DIR}/Sources/swelib
         ${swe_bressani_dev_SOURCE_DIR}/Sources/svglib
         ${swe_bressani_dev_SOURCE_DIR}/Sources/sweinterfacelib
+        ${jsoncpp_SOURCE_DIR}/include
         )
 
 target_link_libraries(astro.fcgi PRIVATE
         fcgi
-        SweBressaniDevCpp
-        jsoncpp
+        jsoncpp_lib
         )
