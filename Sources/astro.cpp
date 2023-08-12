@@ -65,7 +65,7 @@ using namespace std;
         bool sw_chart;
         bool sw_json;
         if (queryString) {
-            map<string, string> params = Util::parseQueryString(qS);
+            map<string, string> params = SweBressaniDevCpp::parseQueryString(qS);
             year = params["year"];
             month = params["month"];
             day = params["day"];
