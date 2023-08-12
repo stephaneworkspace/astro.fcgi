@@ -54,8 +54,18 @@ using namespace std;
             f_lng = 0.0;
         }
 
-        //Swe sweInstance(2000, 5, 15, 12, 30, f_lat, f_lng, 1);
+        Swe sweInstance(2000, 5, 15, 12, 30, f_lat, f_lng, 1);
 
+#if SW_DEBUG
+        printf("Content-type: text/html\r\n");
+        printf("\r\n");
+        printf("<html><head><title>FastCGI Hello!</title></head><body>");
+        printf("<h1>Params</h1>");
+        printf("<p>lat : %.2f</p>", f_lat);
+        printf("<p>lng : %.2f</p>", f_lng);
+        printf("</body></html>");
+        FCGX_Finish_r(&request);
+#else
         FCGX_PutS("Content-type: text/html\r\n", request.out);
         FCGX_PutS("\r\n", request.out);
         FCGX_PutS("<html><head><title>FastCGI Hello!</title></head><body>", request.out);
@@ -66,6 +76,7 @@ using namespace std;
         //FCGX_PutS("<p>lng : %.2f</p>", f_lng);
         FCGX_PutS("</body></html>", request.out);
         FCGX_Finish_r(&request);
+#endif
     }
     return 0;
 }
