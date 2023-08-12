@@ -14,7 +14,7 @@ brew install fcgi
 
 \```
 sudo apt update
-sudo apt install libfcgi-dev cmake
+sudo apt install libfcgi-dev cmake clang
 \```
 
 Pour apache
@@ -22,13 +22,6 @@ Pour apache
 sudo apt update
 sudo apt install libapache2-mod-fcgid
 sudo a2enmod fcgid
-\```
-
-### Arch Linux:
-
-\```
-sudo pacman -Syu
-sudo pacman -S fcgi cmake
 \```
 
 ## Compilation
