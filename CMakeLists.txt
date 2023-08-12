@@ -8,7 +8,7 @@ project(astro.fcgi)
 include_directories(/usr/local/include)
 
 # Spécifiez la source à compiler
-add_executable(astro.fcgi astro.c)
+add_executable(astro.fcgi astro.cpp)
 
 # Lien avec la bibliothèque libfcgi. Homebrew installe généralement les bibliothèques dans /usr/local/lib
 link_directories(/usr/local/lib)

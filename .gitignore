@@ -1,0 +1,35 @@
+# Fichiers générés par CMake
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+*.cmake
+
+# Répertoires de build ou d'autres répertoires temporaires
+build/
+Debug/
+Release/
+dist/
+
+# Fichiers binaires et bibliothèques
+*.o
+*.a
+*.so
+*.exe
+*.out
+*.dll
+*.dylib
+
+# Fichiers pour les éditeurs/IDE
+*.swp
+*.swo
+*.swn
+*.bak
+*.orig
+*.sublime-*
+.vscode/
+.idea/
+*.DS_Store  # Pour les utilisateurs macOS
+
+
