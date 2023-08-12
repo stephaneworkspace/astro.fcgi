@@ -5,12 +5,17 @@
 #ifndef ASTRO_FCGI_SWE_H
 #define ASTRO_FCGI_SWE_H
 
+#include <utility>
 #include <string>
 #include <vector>
+#include <nlohmann/json.hpp>
 #include "swelib.h"
+#include "Util.h"
 #include "sweinterfacelib.h"
 
 using namespace std;
+using json = nlohmann::json;
+using namespace sweinterfacelib;
 
 class Swe {
 public:
@@ -20,7 +25,7 @@ public:
         const string& h, const string& mn, const string& la,
         const string& ln, const string& gm, const string& c, const string& a);
     const string Svg();
-    string getAo();
+    const string Json();
 private:
     int year;
     int month;

@@ -43,8 +43,8 @@ using namespace std;
         string gmt = params["gmt"].c_str();
         string color = params["color"].c_str();
         string aspect_option = params["aspect_option"].c_str();
-        bool sw_chart = true;
-        bool sw_json = false;
+        bool sw_chart = false;
+        bool sw_json = true;
 #else
     while (FCGX_Accept_r(&request) == 0) {
         const char* queryString = FCGX_GetParam("QUERY_STRING", request.envp);
@@ -85,14 +85,26 @@ using namespace std;
             // cout << svgOutput << endl;
 #else
             FCGX_PutS("Content-type:image/svg+xml\r\n\r\n", request.out);
-            if (svgOutput.length() > static_cast<std::string::size_type>(std::numeric_limits<int>::max())) {
-                cerr << "La chaîne est trop longue pour être traitée par FCGX_PutStr." << endl;
+            if (svgOutput.length() > static_cast<string::size_type>(numeric_limits<int>::max())) {
+                cerr << "La chaîne svg est trop longue pour être traitée par FCGX_PutStr." << endl;
             } else {
                 FCGX_PutStr(svgOutput.c_str(), static_cast<int>(svgOutput.length()), request.out);
             }
 #endif
         } else if (sw_json) {
-
+            const string jsonOutput = sweInstance.Json();
+#if SW_DEBUG
+            // cout << jsonOutput << endl;
+#else
+            cout << "Content-type:application/json\r\n";
+            cout << "Access-Control-Allow-Origin: *\r\n";
+            cout << "Access-Control-Allow-Methods: GET\r\n\r\n";
+            if (jsonOutput.length() > static_cast<string::size_type>(numeric_limits<int>::max())) {
+                cerr << "La chaîne json est trop longue pour être traitée par FCGX_PutStr." << endl;
+            } else {
+                FCGX_PutStr(jsonOutput.c_str(), static_cast<int>(jsonOutput.length()), request.out);
+            }
+#endif
         } else {
             FCGX_PutS("Content-type: text/html\r\n", request.out);
             FCGX_PutS("\r\n", request.out);
