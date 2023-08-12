@@ -65,6 +65,7 @@ using namespace std;
 #else
     while (FCGX_Accept_r(&request) == 0) {
 #endif
+        std::cerr << "Information de log ici 3." << endl;
         Swe sweInstance(2000, 5, 15, 12, 30, f_lat, f_lng, 1);
 
         printf("Content-type: text/html\r\n");
@@ -74,7 +75,9 @@ using namespace std;
         printf("<p>lat : %.2f</p>", f_lat);
         printf("<p>lng : %.2f</p>", f_lng);
         printf("</body></html>");
+        std::cerr << "Information de log ici 4." << endl;
         FCGX_Finish_r(&request);
+        std::cerr << "Information de log ici 5." << endl;
     }
     return 0;
 }
