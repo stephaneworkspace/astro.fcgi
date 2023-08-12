@@ -27,10 +27,11 @@ using namespace std;
     string lng = params["lng"].c_str();
 #else
     const char* queryString = FCGX_GetParam("QUERY_STRING", request.envp);
+    string qS = string(queryString);
     string lat;
     string lng;
     if (queryString) {
-        map<string, string> params = Util::parseQueryString(str(queryString));
+        map<string, string> params = Util::parseQueryString(qS);
         string lat = params["lat"];
         string lng = params["lng"];
     }
