@@ -32,7 +32,7 @@ using namespace std;
     if (queryString) {
         map<string, string> params = Util::parseQueryString(str(queryString));
         string lat = params["lat"];
-        sstring lng = params["lng"];
+        string lng = params["lng"];
     }
 #endif
 
