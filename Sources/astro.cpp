@@ -81,7 +81,6 @@ using namespace std;
         }
 #endif
         SweBressaniDevCpp sweInstance(year, month, day, hour, min, lat, lng, gmt, color, aspect_option);
-        cerr << "Passe dans instance" << endl;
 
         if (sw_chart) {
             const string svgOutput = sweInstance.Svg();
@@ -96,7 +95,6 @@ using namespace std;
             }
 #endif
         } else if (sw_json) {
-            cerr << "Passe dans sw_json" << endl;
             const string jsonOutput = sweInstance.Json();
 #if SW_DEBUG
             // cout << jsonOutput << endl;
