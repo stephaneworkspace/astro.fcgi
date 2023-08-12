@@ -140,7 +140,7 @@ const string Swe::Json() {
     astres[CERES] = ASTRE_CERES;
     astres[NOEUD_LUNAIRE_SUD] = ASTRE_NOEUD_LUNAIRE_SUD;
 
-    json js;
+    nlohmann::json js;
     for (int i = 0; i < MAX_ASTRES; ++i) {
         string astre = Astre::name(astres[i]);
         CalcUt calcul_ut = Swe03::calc_ut(utc_to_jd.julian_day_ut, astres[i], OPTION_FLAG_SPEED);
@@ -292,6 +292,5 @@ const string Swe::Json() {
             }
         }
     }
-    return "";
-    //return js.dump();
+    return js.dump();
 }

@@ -14,7 +14,7 @@
 #include <nlohmann/json.hpp>
 
 using namespace std;
-using json = nlohmann::json;
+//using json = nlohmann::json;
 using namespace sweinterfacelib;
 
 class Swe {
