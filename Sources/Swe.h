@@ -8,10 +8,10 @@
 #include <utility>
 #include <string>
 #include <vector>
-#include <nlohmann/json.hpp>
 #include "swelib.h"
 #include "Util.h"
 #include "sweinterfacelib.h"
+#include <nlohmann/json.hpp>
 
 using namespace std;
 using json = nlohmann::json;

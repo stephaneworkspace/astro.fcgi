@@ -1,6 +1,4 @@
 #include <fcgi_stdio.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string>
 #include "fcgio.h"
 #include "Util.h"
@@ -109,11 +107,6 @@ using namespace std;
             FCGX_PutS("Content-type: text/html\r\n", request.out);
             FCGX_PutS("\r\n", request.out);
             FCGX_PutS("<html><head><title>FastCGI Hello!</title></head><body>", request.out);
-            FCGX_PutS("<h1>Params</h1>", request.out);
-            //char buffer[256];
-            //snprintf(buffer, sizeof(buffer), "<p>lat : %.2f</p>", f_lat);
-            //FCGX_PutS(buffer, request.out);
-            //FCGX_PutS("<p>lng : %.2f</p>", f_lng);
             FCGX_PutS("</body></html>", request.out);
         }
         FCGX_Finish_r(&request);
