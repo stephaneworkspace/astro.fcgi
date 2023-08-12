@@ -79,9 +79,9 @@ using namespace std;
             sw_chart = params["sw_chart"] == "true" ? true : false;
             sw_json = params["sw_json"] == "true" ? true : false;
         }
-        sw_json = true;
 #endif
         SweBressaniDevCpp sweInstance(year, month, day, hour, min, lat, lng, gmt, color, aspect_option);
+        cerr << "Passe dans instance" << endl;
 
         if (sw_chart) {
             const string svgOutput = sweInstance.Svg();
@@ -96,6 +96,7 @@ using namespace std;
             }
 #endif
         } else if (sw_json) {
+            cerr << "Passe dans sw_json" << endl;
             const string jsonOutput = sweInstance.Json();
 #if SW_DEBUG
             // cout << jsonOutput << endl;
