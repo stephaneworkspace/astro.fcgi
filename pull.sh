@@ -19,7 +19,7 @@ else
 
         cmake -DSW_DEBUG=0 ..
         make astro.fcgi
-
+        cp -r /home/ubuntu/www/astro.fcgi/build/bin/astro.fcgi /home/ubuntu/www/astro.fcgi/build/astro.fcgi
         sudo rm -rf /var/www/astro.fcgi/build
         sudo cp -r /home/ubuntu/www/astro.fcgi/build /var/www/astro.fcgi
 
