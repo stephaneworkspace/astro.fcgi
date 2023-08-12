@@ -93,7 +93,8 @@ const string Swe::Svg() {
         return decode;
     }
 }
-
+#define FILE FCGI_FILE
+#define fgetc FCGI_fgetc
 const string Swe::Json() {
     Swe02::set_ephe_path("./");
     // TimeZone
@@ -294,3 +295,6 @@ const string Swe::Json() {
     }
     return js.dump();
 }
+// Rétablir les définitions originales après avoir utilisé nlohmann::json
+#undef FILE
+#undef fgetc
