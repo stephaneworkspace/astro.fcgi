@@ -17,6 +17,13 @@ sudo apt update
 sudo apt install libfcgi-dev cmake
 \```
 
+Pour apache
+\```
+sudo apt update
+sudo apt install libapache2-mod-fcgid
+sudo a2enmod fcgid
+\```
+
 ### Arch Linux:
 
 \```
