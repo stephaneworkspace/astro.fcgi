@@ -43,8 +43,8 @@ using namespace std;
         string gmt = params["gmt"].c_str();
         string color = params["color"].c_str();
         string aspect_option = params["aspect_option"].c_str();
-        bool sw_chart = 1;
-        bool sw_json = 0;
+        bool sw_chart = true;
+        bool sw_json = false;
 #else
     while (FCGX_Accept_r(&request) == 0) {
         const char* queryString = FCGX_GetParam("QUERY_STRING", request.envp);
@@ -79,19 +79,18 @@ using namespace std;
 #endif
         Swe sweInstance(year, month, day, hour, min, lat, lng, gmt, color, aspect_option);
 
-#if SW_DEBUG
-        printf("Content-type: text/html\r\n");
-        printf("\r\n");
-        printf("<html><head><title>FastCGI Hello!</title></head><body>");
-        printf("<h1>Params</h1>");
-        //printf("<p>lat : %.2f</p>", f_lat);
-        //printf("<p>lng : %.2f</p>", f_lng);
-        printf("</body></html>");
-        cout << sweInstance.getAo() << endl;
-        FCGX_Finish_r(&request);
-#else
         if (sw_chart) {
-
+            const string svgOutput = sweInstance.Svg();
+#if SW_DEBUG
+            // cout << svgOutput << endl;
+#else
+            FCGX_PutS("Content-type:image/svg+xml\r\n\r\n", request.out);
+            if (svgOutput.length() > static_cast<std::string::size_type>(std::numeric_limits<int>::max())) {
+                cerr << "La chaîne est trop longue pour être traitée par FCGX_PutStr." << endl;
+            } else {
+                FCGX_PutStr(svgOutput.c_str(), static_cast<int>(svgOutput.length()), request.out);
+            }
+#endif
         } else if (sw_json) {
 
         } else {
@@ -106,7 +105,6 @@ using namespace std;
             FCGX_PutS("</body></html>", request.out);
         }
         FCGX_Finish_r(&request);
-#endif
     }
     return 0;
 }

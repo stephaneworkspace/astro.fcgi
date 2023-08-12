@@ -7,6 +7,9 @@
 
 #include <string>
 #include <vector>
+#include "swelib.h"
+#include "sweinterfacelib.h"
+
 using namespace std;
 
 class Swe {
@@ -16,6 +19,7 @@ public:
     Swe(const string& y, const string& m, const string& d,
         const string& h, const string& mn, const string& la,
         const string& ln, const string& gm, const string& c, const string& a);
+    const string Svg();
     string getAo();
 private:
     int year;

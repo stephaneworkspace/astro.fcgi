@@ -80,6 +80,20 @@ Swe::Swe(const string& y, const string& m, const string& d,
     aspect_option = std::move(ao);
 }
 
+const string Swe::Svg() {
+    const char *path = "./";
+    const char *a_o = aspect_option.c_str();
+    string svg = sweinterfacelib::theme_astral_svg(year, month, day, hour, min, lat, lng, gmt, path, color, a_o);
+    static std::string decode;
+    if (!Base64::Decode(svg, &decode)) {
+#if SW_DEBUG
+        std::cout << "Failed to decode" << std::endl;
+#endif
+    } else {
+        return decode;
+    }
+}
+
 string Swe::getAo() {
     return aspect_option;
 }
