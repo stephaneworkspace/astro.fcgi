@@ -81,7 +81,12 @@ set(SWEBRESSANIDEVLIB_HEADERS
 
 
 # Spécifiez la source à compiler
-add_executable(astro.fcgi astro.cpp ${SWEBRESSANIDEVLIB_HEADERS} ${SWEBRESSANIDEVLIB_SOURCES})
+add_executable(astro.fcgi
+        Sources/astro.cpp
+        ${SWEBRESSANIDEVLIB_HEADERS}
+        ${SWEBRESSANIDEVLIB_SOURCES}
+        Sources/Util.h
+        Sources/Util.cpp)
 
 # Lien avec la bibliothèque libfcgi. Homebrew installe généralement les bibliothèques dans /usr/local/lib
 link_directories(/usr/local/lib)
