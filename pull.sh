@@ -22,8 +22,8 @@ else
         sudo rm -rf /var/www/astro.fcgi/build
         sudo cp -r /home/ubuntu/www/astro.fcgi/build /var/www/astro.fcgi
 
-        sudo chmod -R 775 build
-        sudo chown -R www-data:www-data build
+        sudo chmod -R 775 /var/www/astro.fcgi/build
+        sudo chown -R www-data:www-data /var/www/astro.fcgi/build
         sudo chmod +x /var/www/astro.fcgi/build/astro.fcgi
     "
 
