@@ -27,14 +27,10 @@ using namespace std;
         string lng = params["lng"].c_str();
 #else
     while (FCGX_Accept_r(&request) == 0) {
-        std::cerr << "Information de log ici 0." << endl;
         const char* queryString = FCGX_GetParam("QUERY_STRING", request.envp);
-        std::cerr << "Information de log ici 00." << endl;
         string qS = queryString ? string(queryString) : "";
-        std::cerr << "Information de log ici 000." << endl;
         string lat;
         string lng;
-        std::cerr << "Information de log ici 1." << endl;
         if (queryString) {
             map<string, string> params = Util::parseQueryString(qS);
             string lat = params["lat"];
@@ -58,9 +54,6 @@ using namespace std;
             f_lng = 0.0;
         }
 
-        std::cerr << "Information de log ici 2." << endl;
-
-        std::cerr << "Information de log ici 3." << endl;
         Swe sweInstance(2000, 5, 15, 12, 30, f_lat, f_lng, 1);
 
         printf("Content-type: text/html\r\n");
