@@ -23,11 +23,11 @@
     string lat = params["lat"].c_str();
     string lng = params["lng"].c_str();
 #else
-    char* queryString = FCGX_GetParam("QUERY_STRING", request.envp);
+    const char* queryString = FCGX_GetParam("QUERY_STRING", request.envp);
     string lat;
     string lng;
     if (queryString) {
-        std::map<std::string, std::string> params = parseQueryString(queryString);
+        std::map<std::string, std::string> params = Util::parseQueryString(str(queryString));
         std::string lat = params["lat"];
         std::string lng = params["lng"];
     }
