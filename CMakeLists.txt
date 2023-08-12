@@ -5,6 +5,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_C_COMPILER "clang")
 set(CMAKE_CXX_COMPILER "clang++")
+if(DEFINED SW_DEBUG)
+    add_definitions(-DSW_DEBUG=${SW_DEBUG})
+endif()
 
 # Nom du projet
 project(astro.fcgi)

@@ -16,7 +16,7 @@ else
 
         cd /home/ubuntu/www/astro.fcgi/build
 
-        cmake ..
+        cmake -DSW_DEBUG=0 ..
         make
 
         sudo rm -rf /var/www/astro.fcgi/build
