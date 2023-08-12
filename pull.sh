@@ -17,6 +17,8 @@ else
         cd /home/ubuntu/www/astro.fcgi/build
         cp /home/ubuntu/ephem/*.se1 /home/ubuntu/www/astro.fcgi/build/
 
+        export C=/usr/bin/clang
+        export CXX=/usr/bin/clang++
         cmake -DSW_DEBUG=0 ..
         make astro.fcgi
         cp -r /home/ubuntu/www/astro.fcgi/build/bin/astro.fcgi /home/ubuntu/www/astro.fcgi/build/astro.fcgi
