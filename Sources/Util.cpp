@@ -25,7 +25,7 @@ vector<string> Util::tokenize(const std::string& s, char c) {
     return v;
 }
 
-float Util::get_znorm(float angle) {
+float Util::getZnorm(float angle) {
     int ang = static_cast<int>(angle) % 360;
     if (ang <= 360 / 2) {
         return static_cast<float>(ang);
@@ -34,6 +34,29 @@ float Util::get_znorm(float angle) {
     }
 }
 
-float Util::get_closest_distance(float angle1, float angle2)  {
-    return get_znorm(angle2 - angle1);
+float Util::getClosestDistance(float angle1, float angle2)  {
+    return getZnorm(angle2 - angle1);
+}
+
+map<string, string> Util::parseQueryString(std::string &query) {
+    map<string, string> data;
+    size_t pos = 0;
+    while (pos < query.length()) {
+        size_t ampPos = query.find('&', pos);
+        if (ampPos == std::string::npos) ampPos = query.length();
+
+        size_t eqPos = query.find('=', pos);
+        if (eqPos == std::string::npos || eqPos > ampPos) {
+            pos = ampPos + 1;
+            continue;
+        }
+
+        string key = query.substr(pos, eqPos - pos);
+        string value = query.substr(eqPos + 1, ampPos - eqPos - 1);
+
+        data[key] = value;
+
+        pos = ampPos + 1;
+    }
+    return data;
 }
