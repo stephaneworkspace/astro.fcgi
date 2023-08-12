@@ -29,7 +29,8 @@ using namespace std;
                 "&min=" + string(argv[5]) +
                 "&lat=" + string(argv[6]) +
                 "&lng=" + string(argv[7]) +
-                "&gmt=" + string(argv[8]);
+                "&gmt=" + string(argv[8]) +
+                "&color=" + string(argv[9]);
         map<string, string> params = Util::parseQueryString(simulatedQueryString);
         string year = params["year"].c_str();
         string month = params["month"].c_str();
@@ -39,6 +40,7 @@ using namespace std;
         string lat = params["lat"].c_str();
         string lng = params["lng"].c_str();
         string gmt = params["gmt"].c_str();
+        string color = params["color"].c_str();
 #else
     while (FCGX_Accept_r(&request) == 0) {
         const char* queryString = FCGX_GetParam("QUERY_STRING", request.envp);
@@ -51,6 +53,7 @@ using namespace std;
         string lat;
         string lng;
         string gmt;
+        string color;
         if (queryString) {
             map<string, string> params = Util::parseQueryString(qS);
             year = params["year"];
@@ -61,9 +64,10 @@ using namespace std;
             lat = params["lat"];
             lng = params["lng"];
             gmt = params["gmt"];
+            color = params["color"];
         }
 #endif
-        Swe sweInstance(year, month, day, hour, min, lat, lng, gmt);
+        Swe sweInstance(year, month, day, hour, min, lat, lng, gmt, color, "0");
 
 #if SW_DEBUG
         printf("Content-type: text/html\r\n");
@@ -73,6 +77,7 @@ using namespace std;
         //printf("<p>lat : %.2f</p>", f_lat);
         //printf("<p>lng : %.2f</p>", f_lng);
         printf("</body></html>");
+        cout << sweInstance.getAo() << endl;
         FCGX_Finish_r(&request);
 #else
         FCGX_PutS("Content-type: text/html\r\n", request.out);

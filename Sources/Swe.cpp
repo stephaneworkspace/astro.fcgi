@@ -4,14 +4,16 @@
 
 #include "Swe.h"
 
-Swe::Swe(int y, int m, int d, int h, int mn, float la, float ln, int gm)
-        : year(y), month(m), day(d), hour(h), min(mn), lat(la), lng(ln), gmt(gm) {
+#include <utility>
+
+Swe::Swe(int y, int m, int d, int h, int mn, float la, float ln, int gm, int c, const string& a)
+        : year(y), month(m), day(d), hour(h), min(mn), lat(la), lng(ln), gmt(gm), color(c), aspect_option(std::move(a)) {
 
 }
 
-Swe::Swe(const std::string& y, const std::string& m, const std::string& d,
-    const std::string& h, const std::string& mn, const std::string& la,
-    const std::string& ln, const std::string& gm)  {
+Swe::Swe(const string& y, const string& m, const string& d,
+    const string& h, const string& mn, const string& la,
+    const string& ln, const string& gm, const string& c, const string& ao)  {
     try {
         year = stoi(y);
     } catch (const invalid_argument& ia) {
@@ -68,4 +70,16 @@ Swe::Swe(const std::string& y, const std::string& m, const std::string& d,
     } catch (const out_of_range& oor) {
         gmt = 0.0;
     }
+    try {
+        color = stoi(c);
+    } catch (const invalid_argument& ia) {
+        color = 0;
+    } catch (const out_of_range& oor) {
+        color = 0;
+    }
+    aspect_option = std::move(ao);
+}
+
+string Swe::getAo() {
+    return aspect_option;
 }
