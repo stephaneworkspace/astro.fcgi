@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
-#include <SweBressaniDevCpp.h>
+#include "SweBressaniDevCpp.h"
 
 using namespace std;
 
