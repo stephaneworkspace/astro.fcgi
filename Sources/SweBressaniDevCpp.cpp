@@ -309,8 +309,7 @@ const string SweBressaniDevCpp::Json() {
                     } else {
                         js["aspect"][i]["liens"][j]["aspect_name"] = "";
                     }
-                    try {
-                        cerr << "passe ici debut" << aspect << endl;
+                    if (aspect > 0) {
                         const char* res2 = asset_aspect(aspect);
                         if (res2 != nullptr) {
                             string a_aspect(res2);
@@ -318,13 +317,8 @@ const string SweBressaniDevCpp::Json() {
                         } else {
                             js["aspect"][i]["liens"][j]["asset"] = "";
                         }
-                        cerr << "passe ici fin " << aspect << endl;
-                    }
-                    catch (const std::exception& e) {
-                        cerr << "Une exception a été levée : " << e.what() << endl;
-                    }
-                    catch (...) {
-                        cerr << "Une exception inconnue a été levée." << endl;
+                    } else {
+                        js["aspect"][i]["liens"][j]["asset"] = "";
                     }
                 }
             } else {
