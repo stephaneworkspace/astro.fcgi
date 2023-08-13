@@ -309,13 +309,14 @@ const string SweBressaniDevCpp::Json() {
                     } else {
                         js["aspect"][i]["liens"][j]["aspect_name"] = "";
                     }
+                    /*
                     const char* res2 = asset_aspect(aspect);
                     if (res2 != nullptr) {
                        string a_aspect(res2);
                        js["aspect"][i]["liens"][j]["asset"] = a_aspect;
                     } else {
                         js["aspect"][i]["liens"][j]["asset"] = "";
-                    }
+                    }*/
                 }
             } else {
                 js["aspect"][i]["id"] = astresAngle[i];
