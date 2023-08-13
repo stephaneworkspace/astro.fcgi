@@ -312,7 +312,7 @@ const string SweBressaniDevCpp::Json() {
                     const char* res2 = asset_aspect(aspect);
                     if (res2 != nullptr) {
                         string a_aspect(res2);
-                        js["aspect"][i]["liens"][j]["asset"] = a_aspect;
+                        //js["aspect"][i]["liens"][j]["asset"] = a_aspect;
                         js["aspect"][i]["liens"][j]["asset"] = aspect;
                     } else {
                         js["aspect"][i]["liens"][j]["asset"] = "";
