@@ -278,11 +278,6 @@ const string SweBressaniDevCpp::Json() {
                     js["aspect"][i]["liens"][j]["nom"] = astre;
                 }
                 if (aspect == 100) {
-                    /*
-                    js["aspect"][i]["liens"][j]["aspect_id"] = nullptr;
-                    js["aspect"][i]["liens"][j]["aspect_name"] = nullptr;
-                    js["aspect"][i]["liens"][j]["asset"] = nullptr;
-                     */
                     js["aspect"][i]["liens"][j]["aspect_id"] = Json::Value::null;
                     js["aspect"][i]["liens"][j]["aspect_name"] = Json::Value::null;
                     js["aspect"][i]["liens"][j]["asset"] = Json::Value::null;
@@ -313,18 +308,12 @@ const string SweBressaniDevCpp::Json() {
                     string astre = Astre::name(astresAngle[j]);
                     js["aspect"][i]["liens"][j]["nom"] = astre;
                 }
-                /*
-                js["aspect"][i]["liens"][j]["aspect_id"] = nullptr;
-                js["aspect"][i]["liens"][j]["aspect_name"] = nullptr;
-                js["aspect"][i]["liens"][j]["asset"] = nullptr;
-                 */
                 js["aspect"][i]["liens"][j]["aspect_id"] = Json::Value::null;
                 js["aspect"][i]["liens"][j]["aspect_name"] = Json::Value::null;
                 js["aspect"][i]["liens"][j]["asset"] = Json::Value::null;
             }
         }
     }
-    //return js.dump();
     Json::StreamWriterBuilder writer;
     std::string output = Json::writeString(writer, js);
     return output;
