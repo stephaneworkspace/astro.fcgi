@@ -256,6 +256,7 @@ const string SweBressaniDevCpp::Json() {
                         aspect = k;
                     }
                 }
+                /*
                 js["aspect"][i]["id"] = astresAngle[i];
                 if (astresAngle[i] == 98) {
                     js["aspect"][i]["nom"] = "Asc";
@@ -311,7 +312,7 @@ const string SweBressaniDevCpp::Json() {
                 js["aspect"][i]["liens"][j]["aspect_id"] = Json::Value::null;
                 js["aspect"][i]["liens"][j]["aspect_name"] = Json::Value::null;
                 js["aspect"][i]["liens"][j]["asset"] = Json::Value::null;
-            }
+            }*/
         }
     }
     Json::StreamWriterBuilder writer;
