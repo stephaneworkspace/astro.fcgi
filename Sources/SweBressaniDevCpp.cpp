@@ -369,7 +369,8 @@ const string SweBressaniDevCpp::Json() {
                 js["aspect"][i]["liens"][j]["aspect_id"] = Json::Value::null;
                 js["aspect"][i]["liens"][j]["aspect_name"] = Json::Value::null;
                 js["aspect"][i]["liens"][j]["asset"] = Json::Value::null;
-            }*/
+                */
+            }
         }
     }
     Json::StreamWriterBuilder writer;
