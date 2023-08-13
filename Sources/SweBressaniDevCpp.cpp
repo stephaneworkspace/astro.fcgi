@@ -283,9 +283,9 @@ const string SweBressaniDevCpp::Json() {
                     js["aspect"][i]["liens"][j]["aspect_name"] = nullptr;
                     js["aspect"][i]["liens"][j]["asset"] = nullptr;
                      */
-                    js["aspect"][i]["liens"][j]["aspect_id"] = Json::Value::nullSingleton;
-                    js["aspect"][i]["liens"][j]["aspect_name"] = Json::Value::nullSingleton;
-                    js["aspect"][i]["liens"][j]["asset"] = Json::Value::nullSingleton;
+                    js["aspect"][i]["liens"][j]["aspect_id"] = &Json::Value::nullSingleton;
+                    js["aspect"][i]["liens"][j]["aspect_name"] = &Json::Value::nullSingleton;
+                    js["aspect"][i]["liens"][j]["asset"] = &Json::Value::nullSingleton;
                 } else {
                     js["aspect"][i]["liens"][j]["aspect_id"] = aspect;
                     js["aspect"][i]["liens"][j]["aspect_name"] = text_aspect(aspect);
@@ -318,9 +318,9 @@ const string SweBressaniDevCpp::Json() {
                 js["aspect"][i]["liens"][j]["aspect_name"] = nullptr;
                 js["aspect"][i]["liens"][j]["asset"] = nullptr;
                  */
-                js["aspect"][i]["liens"][j]["aspect_id"] = Json::Value::nullSingleton;
-                js["aspect"][i]["liens"][j]["aspect_name"] = Json::Value::nullSingleton;
-                js["aspect"][i]["liens"][j]["asset"] = Json::Value::nullSingleton;
+                js["aspect"][i]["liens"][j]["aspect_id"] = &Json::Value::nullSingleton;
+                js["aspect"][i]["liens"][j]["aspect_name"] = &Json::Value::nullSingleton;
+                js["aspect"][i]["liens"][j]["asset"] = &Json::Value::nullSingleton;
             }
         }
     }
