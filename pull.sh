@@ -4,6 +4,7 @@ DEBUG="-DCMAKE_BUILD_TYPE=Debug"
 if [ -n "$(git status --porcelain)" ]; then
   echo "GIT: there are changes";
 else
+  echo "ok\"$DEBUG\"ok"
     ssh ubuntu@astrologie-traditionnelle.net "
         sudo rm -rf /home/ubuntu/www/astro.fcgi
         cd /home/ubuntu/www
