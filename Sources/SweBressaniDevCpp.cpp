@@ -316,7 +316,6 @@ const string SweBressaniDevCpp::Json() {
                     } else {
                         js["aspect"][i]["liens"][j]["asset"] = "";
                     }
-                    js["aspect"][i]["liens"][j]["asset"] = "";
                 }
             } else {
                 js["aspect"][i]["id"] = astresAngle[i];
