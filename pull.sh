@@ -1,6 +1,6 @@
 #!/bin/sh
-DEBUG="-DCMAKE_BUILD_TYPE=Debug"
-#DEBUG=""
+#DEBUG="-DCMAKE_BUILD_TYPE=Debug"
+DEBUG=""
 if [ -n "$(git status --porcelain)" ]; then
   echo "GIT: there are changes";
 else
