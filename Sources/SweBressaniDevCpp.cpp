@@ -120,13 +120,7 @@ const string SweBressaniDevCpp::Svg() {
 const string SweBressaniDevCpp::Json() {
     Swe02::set_ephe_path("./");
     // TimeZone
-    TimeZone time_zone;
-    time_zone.year = year;
-    time_zone.month = month;
-    time_zone.day = day;
-    time_zone.hour = hour;
-    time_zone.min = min;
-    time_zone.sec = 0;
+    TimeZone time_zone = {year, month, day, hour, min, 0};
     TimeZone utc_time_zone = TZ::utc_time_zone(time_zone, gmt);
     UtcToJd utc_to_jd = Swe08::utc_to_jd(utc_time_zone, CALANDAR_GREGORIAN);
     time_t t = time(0);
@@ -186,9 +180,9 @@ const string SweBressaniDevCpp::Json() {
         js["bodie"][i]["sign_transit"]["nom"] = sign_transit;
         js["bodie"][i]["sign_transit"]["asset"] = asset_sign(calcul_ut_t.split.sign + 1);
     }
-    /*
     // Bodies angle
-    int* astresAngle = new int[MAX_ASTRES + 2];
+    //int* astresAngle = new int[MAX_ASTRES + 2];
+    auto astresAngle = std::make_unique<int[]>(MAX_ASTRES + 2);
     astresAngle[SOLEIL] = ASTRE_SOLEIL;
     astresAngle[LUNE] = ASTRE_LUNE;
     astresAngle[MERCURE] = ASTRE_MERCURE;
@@ -314,15 +308,14 @@ const string SweBressaniDevCpp::Json() {
                 js["aspect"][i]["liens"][j]["asset"] = Json::Value::null;
             }
         }
-    }*/
+    }
     Json::StreamWriterBuilder writer;
     std::string output = Json::writeString(writer, js);
     delete[] house;
     house = nullptr;
     delete[] astres;
     astres = nullptr;
-    //delete[] astresAngle;
-    //astresAngle = nullptr;
+    astresAngle.reset();
     return output;
 }
 
