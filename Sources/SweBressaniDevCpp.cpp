@@ -254,13 +254,11 @@ const string SweBressaniDevCpp::Json() {
                 js["aspect"][i]["id"] = astresAngle[i];
                 if (astresAngle[i] == 98) {
                     js["aspect"][i]["nom"] = "Asc";
-                    js["aspect"][i]["asset"] = asset_angle(1, color);
+                    //js["aspect"][i]["asset"] = asset_angle(1, color);
                 } else if (astresAngle[i] == 99) {
                     js["aspect"][i]["nom"] = "Mc";
-                    js["aspect"][i]["asset"] = asset_angle(4, color);
+                    //js["aspect"][i]["asset"] = asset_angle(4, color);
                 } else {
-                    // string astre = Astre::name(astresAngle[i]);
-                    // js["aspect"][i]["nom"] = astre;
                     const char* res = Astre::name(astresAngle[i]);
                     if (res != nullptr) {
                         string astre(res);
@@ -268,7 +266,7 @@ const string SweBressaniDevCpp::Json() {
                     } else {
                         js["aspect"][i]["nom"] = "";
                     }
-                    js["aspect"][i]["asset"] = asset_bodie(astresAngle[i]);
+                    //js["aspect"][i]["asset"] = asset_bodie(astresAngle[i]);
                 }
                 js["aspect"][i]["liens"][j]["id"] = astresAngle[j];
                 if (astresAngle[j] == 98) {
@@ -276,8 +274,6 @@ const string SweBressaniDevCpp::Json() {
                 } else if (astresAngle[j] == 99) {
                     js["aspect"][i]["liens"][j]["nom"] = "Mc";
                 } else {
-                    // string astre = Astre::name(astresAngle[j]);
-                    // js["aspect"][i]["liens"][j]["nom"] = astre;
                     const char* res = Astre::name(astresAngle[j]);
                     if (res != nullptr) {
                         string astre(res);
@@ -292,20 +288,18 @@ const string SweBressaniDevCpp::Json() {
                     js["aspect"][i]["liens"][j]["asset"] = Json::Value::null;
                 } else {
                     js["aspect"][i]["liens"][j]["aspect_id"] = aspect;
-                    js["aspect"][i]["liens"][j]["aspect_name"] = text_aspect(aspect);
-                    js["aspect"][i]["liens"][j]["asset"] = asset_aspect(aspect);
+                    //js["aspect"][i]["liens"][j]["aspect_name"] = text_aspect(aspect);
+                   // js["aspect"][i]["liens"][j]["asset"] = asset_aspect(aspect);
                 }
             } else {
                 js["aspect"][i]["id"] = astresAngle[i];
                 if (astresAngle[i] == 98) {
                     js["aspect"][i]["nom"] = "Asc";
-                    js["aspect"][i]["asset"] = asset_angle(1, color);
+                    // js["aspect"][i]["asset"] = asset_angle(1, color);
                 } else if (astresAngle[i] == 99) {
                     js["aspect"][i]["nom"] = "Mc";
-                    js["aspect"][i]["asset"] = asset_angle(4, color);
+                    // js["aspect"][i]["asset"] = asset_angle(4, color);
                 } else {
-                    // string astre = Astre::name(astresAngle[i]);
-                    // js["aspect"][i]["nom"] = astre;
                     const char* res = Astre::name(astresAngle[i]);
                     if (res != nullptr) {
                         string astre(res);
@@ -313,7 +307,7 @@ const string SweBressaniDevCpp::Json() {
                     } else {
                         js["aspect"][i]["nom"] = "";
                     }
-                    js["aspect"][i]["asset"] = asset_bodie(astresAngle[i]);
+                    // js["aspect"][i]["asset"] = asset_bodie(astresAngle[i]);
                 }
                 js["aspect"][i]["liens"][j]["id"] = astresAngle[j];
                 if (astresAngle[j] == 98) {
@@ -321,8 +315,6 @@ const string SweBressaniDevCpp::Json() {
                 } else if (astresAngle[j] == 99) {
                     js["aspect"][i]["liens"][j]["nom"] = "Mc";
                 } else {
-                    // string astre = Astre::name(astresAngle[j]);
-                    // js["aspect"][i]["liens"][j]["nom"] = astre;
                     const char* res = Astre::name(astresAngle[j]);
                     if (res != nullptr) {
                         string astre(res);
@@ -347,26 +339,6 @@ const string SweBressaniDevCpp::Json() {
     return output;
 }
 
-vector<string> SweBressaniDevCpp::tokenize(const std::string& s, char c) {
-    auto end = s.cend();
-    auto start = end;
-
-    vector<string> v;
-    for( auto it = s.cbegin(); it != end; ++it ) {
-        if( *it != c ) {
-            if( start == end )
-                start = it;
-            continue;
-        }
-        if( start != end ) {
-            v.emplace_back(start, it);
-            start = end;
-        }
-    }
-    if( start != end )
-        v.emplace_back(start, end);
-    return v;
-}
 
 float SweBressaniDevCpp::getZnorm(float angle) {
     int ang = static_cast<int>(angle) % 360;

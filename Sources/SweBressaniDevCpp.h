@@ -27,7 +27,6 @@ public:
     const string Svg();
     const string Json();
 private:
-    static vector<string> tokenize(const string& s, char c);
     static float getZnorm(float angle);
     static float getClosestDistance(float angle1, float angle2);
 
