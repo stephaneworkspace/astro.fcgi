@@ -274,7 +274,13 @@ const string SweBressaniDevCpp::Json() {
                     } else {
                         js["aspect"][i]["nom"] = "";
                     }
-                    //js["aspect"][i]["asset"] = asset_bodie(astresAngle[i]);
+                    const char* res2 = asset_bodie(astresAngle[i]);
+                    if (res2 != nullptr) {
+                        string a_bodie(res2);
+                        js["aspect"][i]["asset"] = a_bodie;
+                    } else {
+                        js["aspect"][i]["asset"] = "";
+                    }
                 }
                 js["aspect"][i]["liens"][j]["id"] = astresAngle[j];
                 if (astresAngle[j] == 98) {
@@ -323,7 +329,13 @@ const string SweBressaniDevCpp::Json() {
                     } else {
                         js["aspect"][i]["nom"] = "";
                     }
-                    // js["aspect"][i]["asset"] = asset_bodie(astresAngle[i]);
+                    const char* res2 = asset_bodie(astresAngle[i]);
+                    if (res2 != nullptr) {
+                        string a_bodie(res2);
+                        js["aspect"][i]["asset"] = a_bodie;
+                    } else {
+                        js["aspect"][i]["asset"] = "";
+                    }
                 }
                 js["aspect"][i]["liens"][j]["id"] = astresAngle[j];
                 if (astresAngle[j] == 98) {
