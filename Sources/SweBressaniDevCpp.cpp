@@ -302,8 +302,20 @@ const string SweBressaniDevCpp::Json() {
                     js["aspect"][i]["liens"][j]["asset"] = Json::Value::null;
                 } else {
                     js["aspect"][i]["liens"][j]["aspect_id"] = aspect;
-                    //js["aspect"][i]["liens"][j]["aspect_name"] = text_aspect(aspect);
-                   // js["aspect"][i]["liens"][j]["asset"] = asset_aspect(aspect);
+                    const char* res = text_aspect(aspect);
+                    if (res != nullptr) {
+                        string t_aspect(res);
+                        js["aspect"][i]["liens"][j]["aspect_name"] = t_aspect;
+                    } else {
+                        js["aspect"][i]["liens"][j]["aspect_name"] = "";
+                    }
+                    const char* res2 = asset_aspect(aspect);
+                    if (res2 != nullptr) {
+                       string a_aspect(res2);
+                       js["aspect"][i]["liens"][j]["asset"] = a_aspect;
+                    } else {
+                        js["aspect"][i]["liens"][j]["asset"] = "";
+                    }
                 }
             } else {
                 js["aspect"][i]["id"] = astresAngle[i];
