@@ -1,8 +1,9 @@
 #!/bin/sh
+DEBUG="-DCMAKE_BUILD_TYPE=Debug"
+#DEBUG=""
 if [ -n "$(git status --porcelain)" ]; then
   echo "GIT: there are changes";
 else
-  DEBUG="-DCMAKE_BUILD_TYPE=Debug"
     ssh ubuntu@astrologie-traditionnelle.net "
         sudo rm -rf /home/ubuntu/www/astro.fcgi
         cd /home/ubuntu/www
@@ -20,7 +21,7 @@ else
 
         export C=/usr/bin/clang
         export CXX=/usr/bin/clang++
-        cmake -DSW_DEBUG=0 ..
+        cmake $DEBUG -DSW_DEBUG=0 ..
         make astro.fcgi
         cp -r /home/ubuntu/www/astro.fcgi/build/bin/astro.fcgi /home/ubuntu/www/astro.fcgi/build/astro.fcgi
         sudo rm -rf /var/www/astro.fcgi/build
