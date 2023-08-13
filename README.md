@@ -1,6 +1,8 @@
 # Astrologie - FastCGI
 
-Un simple projet FastCGI "Hello, World!".
+Cette application établit une liaison avec la librairie [SweBressaniDev](https://github.com/stephaneworkspace/SweBressaniDev), conçue comme un package Swift hybride (Swift + C++). Dans ce projet, j'ai extrait l'intégralité du code C++ pour le transformer en un FastCGI.
+
+> **Licence :** [GNU3](LICENSE)
 
 ## Prérequis
 
@@ -37,13 +39,12 @@ cd build
 
 \```
 cmake ..
-make astro.fcgi
 \```
 
 3. **Compilez le projet**:
 
 \```
-make
+make astro.fcgi
 \```
 
 Après la compilation, l'exécutable `astro.fcgi` sera disponible dans le répertoire `build/bin`.

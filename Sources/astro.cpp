@@ -1,7 +1,5 @@
 #include <fcgi_stdio.h>
 #include "fcgio.h"
-#include <stdio.h>
-#include <stdlib.h>
 #include <string>
 #include "SweBressaniDevCpp.h"
 

@@ -43,7 +43,4 @@ private:
     string aspect_option;
 };
 
-
-
-
 #endif //ASTRO_FCGI_SWE_H
