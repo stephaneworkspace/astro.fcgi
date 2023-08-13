@@ -316,6 +316,12 @@ const string SweBressaniDevCpp::Json() {
     }
     Json::StreamWriterBuilder writer;
     std::string output = Json::writeString(writer, js);
+    delete[] house;
+    house = nullptr;
+    delete[] astres;
+    astres = nullptr;
+    delete[] astresAngle;
+    astresAngle = nullptr;
     return output;
 }
 
