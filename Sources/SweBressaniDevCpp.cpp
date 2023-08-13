@@ -321,8 +321,8 @@ const string SweBressaniDevCpp::Json() {
     house = nullptr;
     delete[] astres;
     astres = nullptr;
-    delete[] astresAngle;
-    astresAngle = nullptr;
+    //delete[] astresAngle;
+    //astresAngle = nullptr;
     return output;
 }
 
