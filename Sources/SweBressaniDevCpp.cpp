@@ -201,7 +201,7 @@ const string SweBressaniDevCpp::Json() {
     astresAngle[NOEUD_LUNAIRE_SUD + 2] = 99; // Mc
     for (int i = 0; i < MAX_ASTRES + 2; ++i) {
         for (int j = 0; j < MAX_ASTRES + 2; ++j) {
-            if (i != j) {
+            if (true/*i != j*/) {
                 int lon1 = 0;
                 int lon2 = 0;
                 if (astresAngle[i] == 98 || astresAngle[i] == 99) {
