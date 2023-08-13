@@ -254,10 +254,18 @@ const string SweBressaniDevCpp::Json() {
                 js["aspect"][i]["id"] = astresAngle[i];
                 if (astresAngle[i] == 98) {
                     js["aspect"][i]["nom"] = "Asc";
-                    //js["aspect"][i]["asset"] = asset_angle(1, color);
+                    const char* res = asset_angle(1, color);
+                    if (res != nullptr) {
+                        string res_angle(res);
+                        js["aspect"][i]["asset"] = res_angle;
+                    }
                 } else if (astresAngle[i] == 99) {
                     js["aspect"][i]["nom"] = "Mc";
-                    //js["aspect"][i]["asset"] = asset_angle(4, color);
+                    const char* res = asset_angle(4, color);
+                    if (res != nullptr) {
+                        string res_angle(res);
+                        js["aspect"][i]["asset"] = res_angle;
+                    }
                 } else {
                     const char* res = Astre::name(astresAngle[i]);
                     if (res != nullptr) {
@@ -295,10 +303,18 @@ const string SweBressaniDevCpp::Json() {
                 js["aspect"][i]["id"] = astresAngle[i];
                 if (astresAngle[i] == 98) {
                     js["aspect"][i]["nom"] = "Asc";
-                    // js["aspect"][i]["asset"] = asset_angle(1, color);
+                    const char* res = asset_angle(1, color);
+                    if (res != nullptr) {
+                        string res_angle(res);
+                        js["aspect"][i]["asset"] = res_angle;
+                    }
                 } else if (astresAngle[i] == 99) {
                     js["aspect"][i]["nom"] = "Mc";
-                    // js["aspect"][i]["asset"] = asset_angle(4, color);
+                    const char* res = asset_angle(4, color);
+                    if (res != nullptr) {
+                        string res_angle(res);
+                        js["aspect"][i]["asset"] = res_angle;
+                    }
                 } else {
                     const char* res = Astre::name(astresAngle[i]);
                     if (res != nullptr) {
