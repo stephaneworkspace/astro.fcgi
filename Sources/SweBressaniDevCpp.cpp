@@ -313,6 +313,7 @@ const string SweBressaniDevCpp::Json() {
                     if (res2 != nullptr) {
                         string a_aspect(res2);
                         js["aspect"][i]["liens"][j]["asset"] = a_aspect;
+                        js["aspect"][i]["liens"][j]["asset"] = aspect;
                     } else {
                         js["aspect"][i]["liens"][j]["asset"] = "";
                     }
@@ -344,8 +345,7 @@ const string SweBressaniDevCpp::Json() {
                     const char* res2 = asset_bodie(astresAngle[i]);
                     if (res2 != nullptr) {
                         string a_bodie(res2);
-                        //js["aspect"][i]["asset"] = a_bodie;
-                        js["aspect"][i]["asset"] = "";
+                        js["aspect"][i]["asset"] = a_bodie;
                     } else {
                         js["aspect"][i]["asset"] = "";
                     }
