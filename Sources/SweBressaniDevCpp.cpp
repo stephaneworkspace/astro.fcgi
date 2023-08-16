@@ -409,7 +409,7 @@ const string SweBressaniDevCpp::Json() {
  */
 const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
     Json::Value js;
-    if (option == JsonApiV2Option::Json) {
+    if (option == JsonApiV2Option::JsonAspect) {
         Swe02::set_ephe_path("./");
         // TimeZone
         TimeZone time_zone = {year, month, day, hour, min, 0};
@@ -563,7 +563,7 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
                 k++;
             }
         }
-    } else {
+    } else if (option == JsonApiV2Option::JsonAspectsAsset) {
         for (int i = 0; i < ASPECTS_SEMISEXTILE ; ++i) {
             const char* res2 = asset_aspect(i);
             if (res2 != nullptr) {
@@ -571,6 +571,33 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
                 js["aspect"][i]["asset"] = a_aspect;
             } else {
                 js["aspect"][i]["asset"] = Json::Value::null;
+            }
+        }
+    } else if (option == JsonApiV2Option::JsonBodiesAsset) {
+        auto astres = std::make_unique<int[]>(MAX_ASTRES + 2);
+        astres[SOLEIL] = ASTRE_SOLEIL;
+        astres[LUNE] = ASTRE_LUNE;
+        astres[MERCURE] = ASTRE_MERCURE;
+        astres[VENUS] = ASTRE_VENUS;
+        astres[MARS] = ASTRE_MARS;
+        astres[JUPITER] = ASTRE_JUPITER;
+        astres[SATURN] = ASTRE_SATURN;
+        astres[URANUS] = ASTRE_URANUS;
+        astres[NEPTUNE] = ASTRE_NEPTUNE;
+        astres[PLUTON] = ASTRE_PLUTON;
+        astres[NOEUD_LUNAIRE] = ASTRE_NOEUD_LUNAIRE;
+        astres[CHIRON] = ASTRE_CHIRON;
+        astres[CERES] = ASTRE_CERES;
+        astres[NOEUD_LUNAIRE_SUD] = ASTRE_NOEUD_LUNAIRE_SUD;
+        astres[NOEUD_LUNAIRE_SUD + 1] = 98; // Asc
+        astres[NOEUD_LUNAIRE_SUD + 2] = 99; // Mc
+        for (int i = 0; i < MAX_ASTRES + 2; ++i) {
+            const char* res = asset_bodie(astres[i]);
+            if (res != nullptr) {
+                string a_bodie(res);
+                js["bodie"][i]["asset"] = a_bodie;
+            } else {
+                js["bodie"][i]["asset"] = Json::Value::null;
             }
         }
     }

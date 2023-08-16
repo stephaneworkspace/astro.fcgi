@@ -85,6 +85,10 @@ using namespace std;
                 option = OptionApiV2::Grid;
             } else if (option_api_v2 == "JSON_ASPECT") {
                 option = OptionApiV2::JsonAspect;
+            } else if (option_api_v2 == "JSON_ASPECTS_ASSET") {
+                option = OptionApiV2::JsonAspectsAsset;
+            } else if (option_api_v2 == "JSON_BODIES_ASSET") {
+                option = OptionApiV2::JsonBodiesAsset;
             }
         }
 #endif
@@ -106,7 +110,43 @@ using namespace std;
             }
             case OptionApiV2::JsonAspect:
             {
-                const string jsonOutput = sweInstance.JsonApiV2(JsonApiV2Option::Asset);
+                const string jsonOutput = sweInstance.JsonApiV2(JsonApiV2Option::JsonAspect);
+#if SW_DEBUG
+                cout << jsonOutput << endl;
+#else
+                FCGX_PutS("Content-type: application/json\r\n", request.out);
+                FCGX_PutS("Access-Control-Allow-Origin: *\r\n", request.out);
+                FCGX_PutS("Access-Control-Allow-Methods: GET\r\n", request.out);
+                FCGX_PutS("\r\n", request.out);
+                if (jsonOutput.length() > static_cast<string::size_type>(numeric_limits<int>::max())) {
+                    cerr << "La chaîne json est trop longue pour être traitée par FCGX_PutStr." << endl;
+                } else {
+                    FCGX_PutStr(jsonOutput.c_str(), static_cast<int>(jsonOutput.length()), request.out);
+                }
+#endif
+                break;
+            }
+            case OptionApiV2::JsonAspectsAsset:
+            {
+                const string jsonOutput = sweInstance.JsonApiV2(JsonApiV2Option::JsonAspectsAsset);
+#if SW_DEBUG
+                cout << jsonOutput << endl;
+#else
+                FCGX_PutS("Content-type: application/json\r\n", request.out);
+                FCGX_PutS("Access-Control-Allow-Origin: *\r\n", request.out);
+                FCGX_PutS("Access-Control-Allow-Methods: GET\r\n", request.out);
+                FCGX_PutS("\r\n", request.out);
+                if (jsonOutput.length() > static_cast<string::size_type>(numeric_limits<int>::max())) {
+                    cerr << "La chaîne json est trop longue pour être traitée par FCGX_PutStr." << endl;
+                } else {
+                    FCGX_PutStr(jsonOutput.c_str(), static_cast<int>(jsonOutput.length()), request.out);
+                }
+#endif
+                break;
+            }
+            case OptionApiV2::JsonBodiesAsset:
+            {
+                const string jsonOutput = sweInstance.JsonApiV2(JsonApiV2Option::JsonBodiesAsset);
 #if SW_DEBUG
                 cout << jsonOutput << endl;
 #else

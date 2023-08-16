@@ -20,6 +20,8 @@ using namespace sweinterfacelib;
 enum class OptionApiV2 {
     Grid,
     JsonAspect,
+    JsonAspectsAsset,
+    JsonBodiesAsset,
     Null
 };
 
@@ -33,8 +35,9 @@ struct AspectApiV2 {
 };
 
 enum class JsonApiV2Option {
-    Json,
-    Asset
+    JsonAspect,
+    JsonAspectsAsset,
+    JsonBodiesAsset
 };
 
 class SweBressaniDevCpp {
