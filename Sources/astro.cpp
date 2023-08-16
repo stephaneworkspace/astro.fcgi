@@ -100,6 +100,8 @@ using namespace std;
                 cout << svgOutput << endl;
 #else
                 FCGX_PutS("Content-type:image/svg+xml\r\n\r\n", request.out);
+                FCGX_PutS("Access-Control-Allow-Origin: *\r\n", request.out);
+                FCGX_PutS("Access-Control-Allow-Methods: GET\r\n", request.out);
                 if (svgOutput.length() > static_cast<string::size_type>(numeric_limits<int>::max())) {
                     cerr << "La chaîne svg est trop longue pour être traitée par FCGX_PutStr." << endl;
                 } else {
