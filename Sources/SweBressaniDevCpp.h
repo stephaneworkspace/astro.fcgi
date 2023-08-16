@@ -23,6 +23,15 @@ enum class OptionApiV2 {
     Null
 };
 
+struct AspectApiV2 {
+    int asp;
+    int orb;
+    int aspect;
+
+    AspectApiV2() : asp(0), orb(0), aspect(0) {} // Constructeur par défaut
+    AspectApiV2(int asp_, int orb_, int aspect_) : asp(asp_), orb(orb_), aspect(aspect_) {} // Constructeur avec paramètres
+};
+
 class SweBressaniDevCpp {
 public:
     SweBressaniDevCpp(int year = 1984, int month = 4, int day = 1, int hour = 0, int min = 0,

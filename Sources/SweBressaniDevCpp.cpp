@@ -402,6 +402,29 @@ const string SweBressaniDevCpp::JsonApiV2() {
      * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Ascendant
      * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Milieu du ciel
      */
+    Swe02::set_ephe_path("./");
+    // TimeZone
+    TimeZone time_zone = {year, month, day, hour, min, 0};
+    TimeZone utc_time_zone = TZ::utc_time_zone(time_zone, gmt);
+    UtcToJd utc_to_jd = Swe08::utc_to_jd(utc_time_zone, CALANDAR_GREGORIAN);
+    time_t t = time(0);
+    tm* now = localtime(&t);
+    TimeZone time_zone_t;
+    time_zone_t.year = now->tm_year + 1900;
+    time_zone_t.month = now->tm_mon + 1;
+    time_zone_t.day = now->tm_mday;
+    time_zone_t.hour = now->tm_hour;
+    time_zone_t.min = now->tm_min;
+    time_zone_t.sec = now->tm_sec;
+    double gmt_t = gmt;
+    TimeZone utc_time_zone_t = TZ::utc_time_zone(time_zone_t, gmt_t);
+    UtcToJd utc_to_jd_t = Swe08::utc_to_jd(utc_time_zone_t, CALANDAR_GREGORIAN);
+
+    H* house = new H[12];
+    for (int i = 0; i < 12; ++i) {
+        house[i] = Swe14::house(utc_to_jd.julian_day_ut, lat, lng, 'P', i + 1);
+    }
+
     auto astresAngle = std::make_unique<int[]>(MAX_ASTRES + 2);
     astresAngle[SOLEIL] = ASTRE_SOLEIL;
     astresAngle[LUNE] = ASTRE_LUNE;
@@ -419,6 +442,72 @@ const string SweBressaniDevCpp::JsonApiV2() {
     astresAngle[NOEUD_LUNAIRE_SUD] = ASTRE_NOEUD_LUNAIRE_SUD;
     astresAngle[NOEUD_LUNAIRE_SUD + 1] = 98; // Asc
     astresAngle[NOEUD_LUNAIRE_SUD + 2] = 99; // Mc
+
+
+    map<pair<int, int>, AspectApiV2> m;
+    for (int i = 0; i < MAX_ASTRES + 2; ++i) {
+        for (int j = 0; j < MAX_ASTRES + 2; ++j) {
+            if (i != j) {
+                double lon1 = 0.0;
+                double lon2 = 0.0;
+                if (astresAngle[i] == 98 || astresAngle[i] == 99) {
+                    // Angle
+                    if (astresAngle[i] == 98) {
+                        lon1 = house[1].angle; // Asc
+                    } else {
+                        lon1 = house[10].angle; // Mc
+                    }
+                    if (astresAngle[j] == 98 || astresAngle[j] == 99) {
+                        // Angle
+                        if (astresAngle[j] == 98) {
+                            lon2 = house[1].angle; // Asc
+                        } else {
+                            lon2 = house[10].angle; // Mc
+                        }
+                    } else {
+                        // Astre
+                        CalcUt calcul_ut = Swe03::calc_ut(utc_to_jd.julian_day_ut, astresAngle[j], OPTION_FLAG_SPEED);
+                        lon2 = calcul_ut.longitude;
+                    }
+                } else {
+                    // Astre
+                    CalcUt calcul_ut = Swe03::calc_ut(utc_to_jd.julian_day_ut, astresAngle[i], OPTION_FLAG_SPEED);
+                    lon1 = calcul_ut.longitude;
+                    if (astresAngle[j] == 98 || astresAngle[j] == 99) {
+                        // Angle
+                        if (astresAngle[j] == 98) {
+                            lon2 = house[1].angle; // Asc
+                        } else {
+                            lon2 = house[10].angle; // Mc
+                        }
+                    } else {
+                        // Astre
+                        CalcUt calcul_ut = Swe03::calc_ut(utc_to_jd.julian_day_ut, astresAngle[j], OPTION_FLAG_SPEED);
+                        lon2 = calcul_ut.longitude;
+                    }
+                }
+                int aspect = 100; // Nothing
+                float separation = SweBressaniDevCpp::getClosestDistance(lon1, lon2);
+                float abs_separation = abs(separation);
+                for (int k = 0; k < ASPECTS_SEMISEXTILE; ++k) {
+                    int *angle = Aspect::angle(k);
+                    int asp = angle[0];
+                    int orb = angle[1];
+                    if (abs(abs_separation - asp) <= orb) {
+                        aspect = k;
+                        m[make_pair(i,j)] = AspectApiV2(asp, orb, aspect);
+                    }
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+
     Json::Value js;
     for (int i = 0; i < MAX_ASTRES; i++) {
         js["aspect"][i]["id"] = astresAngle[i];
@@ -452,6 +541,27 @@ const string SweBressaniDevCpp::JsonApiV2() {
                 }
             }
             //js["aspect"][i]["liens"][j]["aspect_id"] = Json::Value::null;*/
+            /*if (aspect == 100) {
+                js["aspect"][i]["liens"][j]["aspect_id"] = Json::Value::null;
+                js["aspect"][i]["liens"][j]["aspect_name"] = Json::Value::null;
+                js["aspect"][i]["liens"][j]["asset"] = Json::Value::null;
+            } else {
+                js["aspect"][i]["liens"][j]["aspect_id"] = aspect;
+                const char* res = text_aspect(aspect);
+                if (res != nullptr) {
+                    string t_aspect(res);
+                    js["aspect"][i]["liens"][j]["aspect_name"] = t_aspect;
+                } else {
+                    js["aspect"][i]["liens"][j]["aspect_name"] = "";
+                }
+                const char* res2 = asset_aspect(aspect);
+                if (res2 != nullptr) {
+                    string a_aspect(res2);
+                    js["aspect"][i]["liens"][j]["asset"] = a_aspect;
+                } else {
+                    js["aspect"][i]["liens"][j]["asset"] = "";
+                }
+            }*/
             k++;
         }
     }
