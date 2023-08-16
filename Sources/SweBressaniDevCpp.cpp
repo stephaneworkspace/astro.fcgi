@@ -383,25 +383,27 @@ const string SweBressaniDevCpp::Json() {
     return output;
 }
 
+/*
+ * Retourne en json chaque aspect_id int ou null si aucun aspect
+ *
+ * Soleil
+ * [ ] Lune
+ * [ ] [ ] Mercure
+ * [ ] [ ] [ ] Venus
+ * [ ] [ ] [ ] [ ] Mars
+ * [ ] [ ] [ ] [ ] [ ] Jupiter
+ * [ ] [ ] [ ] [ ] [ ] [ ] Saturne
+ * [ ] [ ] [ ] [ ] [ ] [ ] [ ] Uranus
+ * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Neptune
+ * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Pluton
+ * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Noeud lunaire
+ * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Chiron
+ * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Ceres
+ * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Noeud lunaire sur
+ * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Ascendant
+ * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Milieu du ciel
+ */
 const string SweBressaniDevCpp::JsonApiV2() {
-    /*
-     * Soleil
-     * [ ] Lune
-     * [ ] [ ] Mercure
-     * [ ] [ ] [ ] Venus
-     * [ ] [ ] [ ] [ ] Mars
-     * [ ] [ ] [ ] [ ] [ ] Jupiter
-     * [ ] [ ] [ ] [ ] [ ] [ ] Saturne
-     * [ ] [ ] [ ] [ ] [ ] [ ] [ ] Uranus
-     * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Neptune
-     * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Pluton
-     * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Noeud lunaire
-     * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Chiron
-     * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Ceres
-     * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Noeud lunaire sur
-     * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Ascendant
-     * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Milieu du ciel
-     */
     Swe02::set_ephe_path("./");
     // TimeZone
     TimeZone time_zone = {year, month, day, hour, min, 0};
