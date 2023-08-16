@@ -19,6 +19,7 @@ using namespace sweinterfacelib;
 
 enum class OptionApiV2 {
     Grid,
+    JsonAspect,
     Null
 };
 
@@ -32,6 +33,7 @@ public:
     static map<string, string> parseQueryString(string& query);
     const string Svg();
     const string Json();
+    const string JsonApiV2();
     const string AspectSvg();
 private:
     static float getZnorm(float angle);

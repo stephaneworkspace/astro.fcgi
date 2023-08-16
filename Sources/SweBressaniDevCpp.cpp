@@ -383,6 +383,10 @@ const string SweBressaniDevCpp::Json() {
     return output;
 }
 
+const string SweBressaniDevCpp::JsonApiV2() {
+    return "";
+}
+
 const string SweBressaniDevCpp::AspectSvg() {
     string svg = sweinterfacelib::grille_aspect_svg(color);
     static std::string decode;
