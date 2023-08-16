@@ -46,8 +46,8 @@ using namespace std;
         string aspect_option = params["aspect_option"].c_str();
         bool sw_chart = false;
         bool sw_json = true;
-        string option_api_v2 = "ASPECT_GRID";
-        OptionApiV2 option = OptionApiV2::Grid;
+        string option_api_v2 = "JSON_ASPECT";
+        OptionApiV2 option = OptionApiV2::JsonAspect;
 #else
     while (FCGX_Accept_r(&request) == 0) {
         const char* queryString = FCGX_GetParam("QUERY_STRING", request.envp);
@@ -81,8 +81,12 @@ using namespace std;
             sw_chart = params["sw_chart"] == "true" ? true : false;
             sw_json = params["sw_json"] == "true" ? true : false;
             option_api_v2 = params["option_api_v2"];
-            if option_api_v2 == "ASPECT_GRID" {
+            if option_api_v2 == "GRID" {
                 option = OptionApiV2::Grid;
+            } else {
+                option_api_v2 == "JSON_ASPECT" {
+                    OptionApiV2 option = OptionApiV2::JsonAspect;
+                }
             }
         }
 #endif
@@ -106,7 +110,7 @@ using namespace std;
             {
                 const string jsonOutput = sweInstance.JsonApiV2();
 #if SW_DEBUG
-                // cout << jsonOutput << endl;
+                cout << jsonOutput << endl;
 #else
                 FCGX_PutS("Content-type: application/json\r\n", request.out);
                 FCGX_PutS("Access-Control-Allow-Origin: *\r\n", request.out);

@@ -384,7 +384,61 @@ const string SweBressaniDevCpp::Json() {
 }
 
 const string SweBressaniDevCpp::JsonApiV2() {
-    return "";
+    /*
+     * Soleil
+     * [ ] Lune
+     * [ ] [ ] Mercure
+     * [ ] [ ] [ ] Venus
+     * [ ] [ ] [ ] [ ] Mars
+     * [ ] [ ] [ ] [ ] [ ] Jupiter
+     * [ ] [ ] [ ] [ ] [ ] [ ] Saturne
+     * [ ] [ ] [ ] [ ] [ ] [ ] [ ] Uranus
+     * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Neptune
+     * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Pluton
+     * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Noeud lunaire
+     * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Chiron
+     * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Ceres
+     * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Noeud lunaire sur
+     * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Ascendant
+     * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Milieu du ciel
+     */
+    auto astresAngle = std::make_unique<int[]>(MAX_ASTRES + 2);
+    astresAngle[SOLEIL] = ASTRE_SOLEIL;
+    astresAngle[LUNE] = ASTRE_LUNE;
+    astresAngle[MERCURE] = ASTRE_MERCURE;
+    astresAngle[VENUS] = ASTRE_VENUS;
+    astresAngle[MARS] = ASTRE_MARS;
+    astresAngle[JUPITER] = ASTRE_JUPITER;
+    astresAngle[SATURN] = ASTRE_SATURN;
+    astresAngle[URANUS] = ASTRE_URANUS;
+    astresAngle[NEPTUNE] = ASTRE_NEPTUNE;
+    astresAngle[PLUTON] = ASTRE_PLUTON;
+    astresAngle[NOEUD_LUNAIRE] = ASTRE_NOEUD_LUNAIRE;
+    astresAngle[CHIRON] = ASTRE_CHIRON;
+    astresAngle[CERES] = ASTRE_CERES;
+    astresAngle[NOEUD_LUNAIRE_SUD] = ASTRE_NOEUD_LUNAIRE_SUD;
+    astresAngle[NOEUD_LUNAIRE_SUD + 1] = 98; // Asc
+    astresAngle[NOEUD_LUNAIRE_SUD + 2] = 99; // Mc
+    Json::Value js;
+    for (int i = 0; i < MAX_ASTRES + 2; ++i) {
+        js["aspect"][i]["id"] = astresAngle[i];
+        if (astresAngle[i] == 98) {
+            js["aspect"][i]["nom"] = "Asc";
+        } else if (astresAngle[i] == 99) {
+            js["aspect"][i]["nom"] = "Mc";
+        } else {
+            const char* res = Astre::name(astresAngle[i]);
+            if (res != nullptr) {
+                string astre(res);
+                js["aspect"][i]["nom"] = astre;
+            } else {
+                js["aspect"][i]["nom"] = "";
+            }
+        }
+    }
+    Json::StreamWriterBuilder writer;
+    std::string output = Json::writeString(writer, js);
+    return output;
 }
 
 const string SweBressaniDevCpp::AspectSvg() {
