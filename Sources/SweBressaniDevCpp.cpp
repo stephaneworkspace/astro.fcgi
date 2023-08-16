@@ -110,8 +110,8 @@ const string SweBressaniDevCpp::Svg() {
     if (!Base64::Decode(svg, &decode)) {
 #if SW_DEBUG
         std::cout << "Failed to decode" << std::endl;
-        return "";
 #endif
+        return "";
     } else {
         return decode;
     }
@@ -383,6 +383,19 @@ const string SweBressaniDevCpp::Json() {
     return output;
 }
 
+const string SweBressaniDevCpp::AspectSvg() {
+    string svg = sweinterfacelib::grille_aspect_svg(color);
+    static std::string decode;
+    if (!Base64::Decode(svg, &decode)) {
+#if SW_DEBUG
+        std::cout << "Failed to decode" << std::endl;
+#endif
+        return "";
+    } else {
+        return decode;
+    }
+
+}
 
 float SweBressaniDevCpp::getZnorm(float angle) {
     int ang = static_cast<int>(angle) % 360;

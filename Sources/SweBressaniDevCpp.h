@@ -16,6 +16,12 @@
 using namespace std;
 using namespace sweinterfacelib;
 
+
+enum class OptionApiV2 {
+    Grid,
+    Null
+};
+
 class SweBressaniDevCpp {
 public:
     SweBressaniDevCpp(int year = 1984, int month = 4, int day = 1, int hour = 0, int min = 0,
@@ -26,6 +32,7 @@ public:
     static map<string, string> parseQueryString(string& query);
     const string Svg();
     const string Json();
+    const string AspectSvg();
 private:
     static float getZnorm(float angle);
     static float getClosestDistance(float angle1, float angle2);

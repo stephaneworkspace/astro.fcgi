@@ -46,6 +46,8 @@ using namespace std;
         string aspect_option = params["aspect_option"].c_str();
         bool sw_chart = false;
         bool sw_json = true;
+        string option_api_v2 = "ASPECT_GRID";
+        OptionApiV2 option = OptionApiV2::Grid;
 #else
     while (FCGX_Accept_r(&request) == 0) {
         const char* queryString = FCGX_GetParam("QUERY_STRING", request.envp);
@@ -62,6 +64,8 @@ using namespace std;
         string aspect_option;
         bool sw_chart;
         bool sw_json;
+        string option_api_v2;
+        OptionApiV2 option = OptionApiV2::Null;
         if (queryString) {
             map<string, string> params = SweBressaniDevCpp::parseQueryString(qS);
             year = params["year"];
@@ -76,47 +80,63 @@ using namespace std;
             aspect_option = params["aspect_option"];
             sw_chart = params["sw_chart"] == "true" ? true : false;
             sw_json = params["sw_json"] == "true" ? true : false;
+            option_api_v2 = params["option_api_v2"];
+            if option_api_v2 == "ASPECT_GRID" {
+                option = OptionApiV2::Grid;
+            }
         }
 #endif
         SweBressaniDevCpp sweInstance(year, month, day, hour, min, lat, lng, gmt, color, aspect_option);
-
-        if (sw_chart) {
-            const string svgOutput = sweInstance.Svg();
+        switch (option) {
+            case OptionApiV2::Grid: {
+                const string svgOutput = sweInstance.AspectSvg();
 #if SW_DEBUG
-            // cout << svgOutput << endl;
-#else
-            FCGX_PutS("Content-type:image/svg+xml\r\n\r\n", request.out);
-            if (svgOutput.length() > static_cast<string::size_type>(numeric_limits<int>::max())) {
-                cerr << "La chaîne svg est trop longue pour être traitée par FCGX_PutStr." << endl;
-            } else {
-                FCGX_PutStr(svgOutput.c_str(), static_cast<int>(svgOutput.length()), request.out);
-            }
+                cout << svgOutput << endl;
 #endif
-        } else if (sw_json) {
-            const string jsonOutput = sweInstance.Json();
+                break;
+            }
+            case OptionApiV2::Null:
+            default:
+            {
+                if (sw_chart) {
+                    const string svgOutput = sweInstance.Svg();
 #if SW_DEBUG
-            // cout << jsonOutput << endl;
+                    // cout << svgOutput << endl;
 #else
-            FCGX_PutS("Content-type: application/json\r\n", request.out);
-            FCGX_PutS("Access-Control-Allow-Origin: *\r\n", request.out);
-            FCGX_PutS("Access-Control-Allow-Methods: GET\r\n", request.out);
-            FCGX_PutS("\r\n", request.out);
-            if (jsonOutput.length() > static_cast<string::size_type>(numeric_limits<int>::max())) {
-                cerr << "La chaîne json est trop longue pour être traitée par FCGX_PutStr." << endl;
-            } else {
-                FCGX_PutStr(jsonOutput.c_str(), static_cast<int>(jsonOutput.length()), request.out);
-            }
+                    FCGX_PutS("Content-type:image/svg+xml\r\n\r\n", request.out);
+                    if (svgOutput.length() > static_cast<string::size_type>(numeric_limits<int>::max())) {
+                        cerr << "La chaîne svg est trop longue pour être traitée par FCGX_PutStr." << endl;
+                    } else {
+                        FCGX_PutStr(svgOutput.c_str(), static_cast<int>(svgOutput.length()), request.out);
+                    }
 #endif
-        } else {
-            FCGX_PutS("Content-type: text/html\r\n", request.out);
-            FCGX_PutS("\r\n", request.out);
-            FCGX_PutS("<html><head><title>FastCGI Hello!</title></head><body>", request.out);
-            // FCGX_PutS("<h1>Params</h1>", request.out);
-            // char buffer[256];
-            // snprintf(buffer, sizeof(buffer), "<p>lat : %.2f</p>", f_lat);
-            // FCGX_PutS(buffer, request.out);
-            // FCGX_PutS("<p>lng : %.2f</p>", f_lng);
-            FCGX_PutS("</body></html>", request.out);
+                } else if (sw_json) {
+                    const string jsonOutput = sweInstance.Json();
+#if SW_DEBUG
+                    // cout << jsonOutput << endl;
+#else
+                    FCGX_PutS("Content-type: application/json\r\n", request.out);
+                    FCGX_PutS("Access-Control-Allow-Origin: *\r\n", request.out);
+                    FCGX_PutS("Access-Control-Allow-Methods: GET\r\n", request.out);
+                    FCGX_PutS("\r\n", request.out);
+                    if (jsonOutput.length() > static_cast<string::size_type>(numeric_limits<int>::max())) {
+                        cerr << "La chaîne json est trop longue pour être traitée par FCGX_PutStr." << endl;
+                    } else {
+                        FCGX_PutStr(jsonOutput.c_str(), static_cast<int>(jsonOutput.length()), request.out);
+                    }
+#endif
+                } else {
+                    FCGX_PutS("Content-type: text/html\r\n", request.out);
+                    FCGX_PutS("\r\n", request.out);
+                    FCGX_PutS("<html><head><title>FastCGI Hello!</title></head><body>", request.out);
+                    // FCGX_PutS("<h1>Params</h1>", request.out);
+                    // char buffer[256];
+                    // snprintf(buffer, sizeof(buffer), "<p>lat : %.2f</p>", f_lat);
+                    // FCGX_PutS(buffer, request.out);
+                    // FCGX_PutS("<p>lng : %.2f</p>", f_lng);
+                    FCGX_PutS("</body></html>", request.out);
+                }
+            }
         }
         FCGX_Finish_r(&request);
     }
