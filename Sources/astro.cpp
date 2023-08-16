@@ -81,12 +81,10 @@ using namespace std;
             sw_chart = params["sw_chart"] == "true" ? true : false;
             sw_json = params["sw_json"] == "true" ? true : false;
             option_api_v2 = params["option_api_v2"];
-            if option_api_v2 == "GRID" {
+            if (option_api_v2 == "GRID") {
                 option = OptionApiV2::Grid;
-            } else {
-                option_api_v2 == "JSON_ASPECT" {
-                    OptionApiV2 option = OptionApiV2::JsonAspect;
-                }
+            } elseif (option_api_v2 == "JSON_ASPECT"){
+                option = OptionApiV2::JsonAspect;
             }
         }
 #endif
