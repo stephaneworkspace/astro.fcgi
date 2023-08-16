@@ -83,7 +83,7 @@ using namespace std;
             option_api_v2 = params["option_api_v2"];
             if (option_api_v2 == "GRID") {
                 option = OptionApiV2::Grid;
-            } elseif (option_api_v2 == "JSON_ASPECT"){
+            } else if (option_api_v2 == "JSON_ASPECT") {
                 option = OptionApiV2::JsonAspect;
             }
         }
