@@ -108,7 +108,7 @@ using namespace std;
             }
             case OptionApiV2::JsonAspect:
             {
-                const string jsonOutput = sweInstance.JsonApiV2();
+                const string jsonOutput = sweInstance.JsonApiV2(JsonApiV2Option::Asset);
 #if SW_DEBUG
                 cout << jsonOutput << endl;
 #else

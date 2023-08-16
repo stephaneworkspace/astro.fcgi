@@ -384,6 +384,7 @@ const string SweBressaniDevCpp::Json() {
 }
 
 /*
+ * JsonApiV2Option::Json
  * Retourne en json chaque aspect_id int ou null si aucun aspect
  *
  * Soleil
@@ -402,160 +403,175 @@ const string SweBressaniDevCpp::Json() {
  * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Noeud lunaire sur
  * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Ascendant
  * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Milieu du ciel
+ *
+ * JsonApiV2Option::Asset
+ * Retourne les svg des aspects
  */
-const string SweBressaniDevCpp::JsonApiV2() {
-    Swe02::set_ephe_path("./");
-    // TimeZone
-    TimeZone time_zone = {year, month, day, hour, min, 0};
-    TimeZone utc_time_zone = TZ::utc_time_zone(time_zone, gmt);
-    UtcToJd utc_to_jd = Swe08::utc_to_jd(utc_time_zone, CALANDAR_GREGORIAN);
-    time_t t = time(0);
-    tm* now = localtime(&t);
-    TimeZone time_zone_t;
-    time_zone_t.year = now->tm_year + 1900;
-    time_zone_t.month = now->tm_mon + 1;
-    time_zone_t.day = now->tm_mday;
-    time_zone_t.hour = now->tm_hour;
-    time_zone_t.min = now->tm_min;
-    time_zone_t.sec = now->tm_sec;
-    double gmt_t = gmt;
-    TimeZone utc_time_zone_t = TZ::utc_time_zone(time_zone_t, gmt_t);
-    UtcToJd utc_to_jd_t = Swe08::utc_to_jd(utc_time_zone_t, CALANDAR_GREGORIAN);
-
-    H* house = new H[12];
-    for (int i = 0; i < 12; ++i) {
-        house[i] = Swe14::house(utc_to_jd.julian_day_ut, lat, lng, 'P', i + 1);
-    }
-
-    auto astresAngle = std::make_unique<int[]>(MAX_ASTRES + 2);
-    astresAngle[SOLEIL] = ASTRE_SOLEIL;
-    astresAngle[LUNE] = ASTRE_LUNE;
-    astresAngle[MERCURE] = ASTRE_MERCURE;
-    astresAngle[VENUS] = ASTRE_VENUS;
-    astresAngle[MARS] = ASTRE_MARS;
-    astresAngle[JUPITER] = ASTRE_JUPITER;
-    astresAngle[SATURN] = ASTRE_SATURN;
-    astresAngle[URANUS] = ASTRE_URANUS;
-    astresAngle[NEPTUNE] = ASTRE_NEPTUNE;
-    astresAngle[PLUTON] = ASTRE_PLUTON;
-    astresAngle[NOEUD_LUNAIRE] = ASTRE_NOEUD_LUNAIRE;
-    astresAngle[CHIRON] = ASTRE_CHIRON;
-    astresAngle[CERES] = ASTRE_CERES;
-    astresAngle[NOEUD_LUNAIRE_SUD] = ASTRE_NOEUD_LUNAIRE_SUD;
-    astresAngle[NOEUD_LUNAIRE_SUD + 1] = 98; // Asc
-    astresAngle[NOEUD_LUNAIRE_SUD + 2] = 99; // Mc
-
-
-    map<pair<int, int>, AspectApiV2> m;
-    for (int i = 0; i < MAX_ASTRES + 2; ++i) {
-        for (int j = 0; j < MAX_ASTRES + 2; ++j) {
-            if (i != j) {
-                double lon1 = 0.0;
-                double lon2 = 0.0;
-                if (astresAngle[i] == 98 || astresAngle[i] == 99) {
-                    // Angle
-                    if (astresAngle[i] == 98) {
-                        lon1 = house[1].angle; // Asc
-                    } else {
-                        lon1 = house[10].angle; // Mc
-                    }
-                    if (astresAngle[j] == 98 || astresAngle[j] == 99) {
-                        // Angle
-                        if (astresAngle[j] == 98) {
-                            lon2 = house[1].angle; // Asc
-                        } else {
-                            lon2 = house[10].angle; // Mc
-                        }
-                    } else {
-                        // Astre
-                        CalcUt calcul_ut = Swe03::calc_ut(utc_to_jd.julian_day_ut, astresAngle[j], OPTION_FLAG_SPEED);
-                        lon2 = calcul_ut.longitude;
-                    }
-                } else {
-                    // Astre
-                    CalcUt calcul_ut = Swe03::calc_ut(utc_to_jd.julian_day_ut, astresAngle[i], OPTION_FLAG_SPEED);
-                    lon1 = calcul_ut.longitude;
-                    if (astresAngle[j] == 98 || astresAngle[j] == 99) {
-                        // Angle
-                        if (astresAngle[j] == 98) {
-                            lon2 = house[1].angle; // Asc
-                        } else {
-                            lon2 = house[10].angle; // Mc
-                        }
-                    } else {
-                        // Astre
-                        CalcUt calcul_ut = Swe03::calc_ut(utc_to_jd.julian_day_ut, astresAngle[j], OPTION_FLAG_SPEED);
-                        lon2 = calcul_ut.longitude;
-                    }
-                }
-                float separation = SweBressaniDevCpp::getClosestDistance(lon1, lon2);
-                float abs_separation = abs(separation);
-                for (int k = 0; k < ASPECTS_SEMISEXTILE; ++k) {
-                    int *angle = Aspect::angle(k);
-                    int asp = angle[0];
-                    int orb = angle[1];
-                    if (abs(abs_separation - asp) <= orb) {
-                        m[make_pair(i,j)] = AspectApiV2(abs(abs_separation - asp), orb, k);
-                    }
-                }
-            }
-        }
-    }
-
+const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
     Json::Value js;
-    for (int i = 0; i < MAX_ASTRES; i++) {
-        js["aspect"][i]["id"] = astresAngle[i];
-        if (astresAngle[i] == 98) {
-            js["aspect"][i]["nom"] = "Asc";
-        } else if (astresAngle[i] == 99) {
-            js["aspect"][i]["nom"] = "Mc";
-        } else {
-            const char* res = Astre::name(astresAngle[i]);
-            if (res != nullptr) {
-                string astre(res);
-                js["aspect"][i]["nom"] = astre;
-            } else {
-                js["aspect"][i]["nom"] = "";
+    if (option == JsonApiV2Option::Json) {
+        Swe02::set_ephe_path("./");
+        // TimeZone
+        TimeZone time_zone = {year, month, day, hour, min, 0};
+        TimeZone utc_time_zone = TZ::utc_time_zone(time_zone, gmt);
+        UtcToJd utc_to_jd = Swe08::utc_to_jd(utc_time_zone, CALANDAR_GREGORIAN);
+        time_t t = time(0);
+        tm* now = localtime(&t);
+        TimeZone time_zone_t;
+        time_zone_t.year = now->tm_year + 1900;
+        time_zone_t.month = now->tm_mon + 1;
+        time_zone_t.day = now->tm_mday;
+        time_zone_t.hour = now->tm_hour;
+        time_zone_t.min = now->tm_min;
+        time_zone_t.sec = now->tm_sec;
+        double gmt_t = gmt;
+        TimeZone utc_time_zone_t = TZ::utc_time_zone(time_zone_t, gmt_t);
+        UtcToJd utc_to_jd_t = Swe08::utc_to_jd(utc_time_zone_t, CALANDAR_GREGORIAN);
+
+        H* house = new H[12];
+        for (int i = 0; i < 12; ++i) {
+            house[i] = Swe14::house(utc_to_jd.julian_day_ut, lat, lng, 'P', i + 1);
+        }
+
+        auto astresAngle = std::make_unique<int[]>(MAX_ASTRES + 2);
+        astresAngle[SOLEIL] = ASTRE_SOLEIL;
+        astresAngle[LUNE] = ASTRE_LUNE;
+        astresAngle[MERCURE] = ASTRE_MERCURE;
+        astresAngle[VENUS] = ASTRE_VENUS;
+        astresAngle[MARS] = ASTRE_MARS;
+        astresAngle[JUPITER] = ASTRE_JUPITER;
+        astresAngle[SATURN] = ASTRE_SATURN;
+        astresAngle[URANUS] = ASTRE_URANUS;
+        astresAngle[NEPTUNE] = ASTRE_NEPTUNE;
+        astresAngle[PLUTON] = ASTRE_PLUTON;
+        astresAngle[NOEUD_LUNAIRE] = ASTRE_NOEUD_LUNAIRE;
+        astresAngle[CHIRON] = ASTRE_CHIRON;
+        astresAngle[CERES] = ASTRE_CERES;
+        astresAngle[NOEUD_LUNAIRE_SUD] = ASTRE_NOEUD_LUNAIRE_SUD;
+        astresAngle[NOEUD_LUNAIRE_SUD + 1] = 98; // Asc
+        astresAngle[NOEUD_LUNAIRE_SUD + 2] = 99; // Mc
+
+
+        map<pair<int, int>, AspectApiV2> m;
+        for (int i = 0; i < MAX_ASTRES + 2; ++i) {
+            for (int j = 0; j < MAX_ASTRES + 2; ++j) {
+                if (i != j) {
+                    double lon1 = 0.0;
+                    double lon2 = 0.0;
+                    if (astresAngle[i] == 98 || astresAngle[i] == 99) {
+                        // Angle
+                        if (astresAngle[i] == 98) {
+                            lon1 = house[1].angle; // Asc
+                        } else {
+                            lon1 = house[10].angle; // Mc
+                        }
+                        if (astresAngle[j] == 98 || astresAngle[j] == 99) {
+                            // Angle
+                            if (astresAngle[j] == 98) {
+                                lon2 = house[1].angle; // Asc
+                            } else {
+                                lon2 = house[10].angle; // Mc
+                            }
+                        } else {
+                            // Astre
+                            CalcUt calcul_ut = Swe03::calc_ut(utc_to_jd.julian_day_ut, astresAngle[j], OPTION_FLAG_SPEED);
+                            lon2 = calcul_ut.longitude;
+                        }
+                    } else {
+                        // Astre
+                        CalcUt calcul_ut = Swe03::calc_ut(utc_to_jd.julian_day_ut, astresAngle[i], OPTION_FLAG_SPEED);
+                        lon1 = calcul_ut.longitude;
+                        if (astresAngle[j] == 98 || astresAngle[j] == 99) {
+                            // Angle
+                            if (astresAngle[j] == 98) {
+                                lon2 = house[1].angle; // Asc
+                            } else {
+                                lon2 = house[10].angle; // Mc
+                            }
+                        } else {
+                            // Astre
+                            CalcUt calcul_ut = Swe03::calc_ut(utc_to_jd.julian_day_ut, astresAngle[j], OPTION_FLAG_SPEED);
+                            lon2 = calcul_ut.longitude;
+                        }
+                    }
+                    float separation = SweBressaniDevCpp::getClosestDistance(lon1, lon2);
+                    float abs_separation = abs(separation);
+                    for (int k = 0; k < ASPECTS_SEMISEXTILE; ++k) {
+                        int *angle = Aspect::angle(k);
+                        int asp = angle[0];
+                        int orb = angle[1];
+                        if (abs(abs_separation - asp) <= orb) {
+                            m[make_pair(i,j)] = AspectApiV2(abs(abs_separation - asp), orb, k);
+                        }
+                    }
+                }
             }
         }
-        int k = 0;
-        for (int j = i + 1; j < MAX_ASTRES + 2; j++) {
-            js["aspect"][i]["liens"][k]["id"] = astresAngle[j];
-            /*if (astresAngle[j] == 98) {
-                js["aspect"][i]["liens"][k]["nom"] = "Asc";
-            } else if (astresAngle[j] == 99) {
-                js["aspect"][i]["liens"][k]["nom"] = "Mc";
+
+        for (int i = 0; i < MAX_ASTRES; i++) {
+            js["aspect"][i]["id"] = astresAngle[i];
+            if (astresAngle[i] == 98) {
+                js["aspect"][i]["nom"] = "Asc";
+            } else if (astresAngle[i] == 99) {
+                js["aspect"][i]["nom"] = "Mc";
             } else {
-                const char* res = Astre::name(astresAngle[j]);
+                const char* res = Astre::name(astresAngle[i]);
                 if (res != nullptr) {
                     string astre(res);
-                    js["aspect"][i]["liens"][k]["nom"] = astre;
+                    js["aspect"][i]["nom"] = astre;
                 } else {
-                    js["aspect"][i]["liens"][k]["nom"] = "";
+                    js["aspect"][i]["nom"] = "";
                 }
-            }*/
-            pair<int, int> key(i, j);
-            auto it = m.find(key);
-            if (it != m.end()) { // la clé existe
-                AspectApiV2 value = it->second;
-                js["aspect"][i]["liens"][k]["aspect_id"] = value.aspect;
-                /*
-                const char* res = text_aspect(value.aspect);
-                if (res != nullptr) {
-                    string t_aspect(res);
-                    js["aspect"][i]["liens"][k]["aspect_name"] = t_aspect;
-                } else {
-                    js["aspect"][i]["liens"][k]["aspect_name"] = "";
-                }*/
-                //js["aspect"][i]["liens"][k]["asp"] = value.asp;
-                //js["aspect"][i]["liens"][k]["orb"] = value.orb;
-            } else {
-                js["aspect"][i]["liens"][k]["aspect_id"] = Json::Value::null;
-                //js["aspect"][i]["liens"][k]["aspect_name"] = Json::Value::null;
-                //js["aspect"][i]["liens"][k]["asp"] = Json::Value::null;
-                //js["aspect"][i]["liens"][k]["orb"] = Json::Value::null;
             }
-            k++;
+            int k = 0;
+            for (int j = i + 1; j < MAX_ASTRES + 2; j++) {
+                js["aspect"][i]["liens"][k]["id"] = astresAngle[j];
+                /*if (astresAngle[j] == 98) {
+                    js["aspect"][i]["liens"][k]["nom"] = "Asc";
+                } else if (astresAngle[j] == 99) {
+                    js["aspect"][i]["liens"][k]["nom"] = "Mc";
+                } else {
+                    const char* res = Astre::name(astresAngle[j]);
+                    if (res != nullptr) {
+                        string astre(res);
+                        js["aspect"][i]["liens"][k]["nom"] = astre;
+                    } else {
+                        js["aspect"][i]["liens"][k]["nom"] = "";
+                    }
+                }*/
+                pair<int, int> key(i, j);
+                auto it = m.find(key);
+                if (it != m.end()) { // la clé existe
+                    AspectApiV2 value = it->second;
+                    js["aspect"][i]["liens"][k]["aspect_id"] = value.aspect;
+                    /*
+                    const char* res = text_aspect(value.aspect);
+                    if (res != nullptr) {
+                        string t_aspect(res);
+                        js["aspect"][i]["liens"][k]["aspect_name"] = t_aspect;
+                    } else {
+                        js["aspect"][i]["liens"][k]["aspect_name"] = "";
+                    }*/
+                    //js["aspect"][i]["liens"][k]["asp"] = value.asp;
+                    //js["aspect"][i]["liens"][k]["orb"] = value.orb;
+                } else {
+                    js["aspect"][i]["liens"][k]["aspect_id"] = Json::Value::null;
+                    //js["aspect"][i]["liens"][k]["aspect_name"] = Json::Value::null;
+                    //js["aspect"][i]["liens"][k]["asp"] = Json::Value::null;
+                    //js["aspect"][i]["liens"][k]["orb"] = Json::Value::null;
+                }
+                k++;
+            }
+        }
+    } else {
+        for (int i = 0; i < ASPECTS_SEMISEXTILE ; ++i) {
+            const char* res2 = asset_aspect(i);
+            if (res2 != nullptr) {
+                string a_aspect(res2);
+                js["aspect"][i]["asset"] = a_aspect;
+            } else {
+                js["aspect"][i]["asset"] = Json::Value::null;
+            }
         }
     }
     Json::StreamWriterBuilder writer;
