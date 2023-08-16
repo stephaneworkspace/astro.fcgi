@@ -92,6 +92,13 @@ using namespace std;
                 const string svgOutput = sweInstance.AspectSvg();
 #if SW_DEBUG
                 cout << svgOutput << endl;
+#else
+                FCGX_PutS("Content-type:image/svg+xml\r\n\r\n", request.out);
+                if (svgOutput.length() > static_cast<string::size_type>(numeric_limits<int>::max())) {
+                    cerr << "La chaîne svg est trop longue pour être traitée par FCGX_PutStr." << endl;
+                } else {
+                    FCGX_PutStr(svgOutput.c_str(), static_cast<int>(svgOutput.length()), request.out);
+                }
 #endif
                 break;
             }
