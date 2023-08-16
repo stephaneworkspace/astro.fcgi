@@ -24,12 +24,12 @@ enum class OptionApiV2 {
 };
 
 struct AspectApiV2 {
-    int asp;
+    float asp;
     int orb;
     int aspect;
 
-    AspectApiV2() : asp(0), orb(0), aspect(0) {} // Constructeur par défaut
-    AspectApiV2(int asp_, int orb_, int aspect_) : asp(asp_), orb(orb_), aspect(aspect_) {} // Constructeur avec paramètres
+    AspectApiV2() : asp(0.0), orb(0), aspect(0) {} // Constructeur par défaut
+    AspectApiV2(float asp_, int orb_, int aspect_) : asp(asp_), orb(orb_), aspect(aspect_) {} // Constructeur avec paramètres
 };
 
 class SweBressaniDevCpp {

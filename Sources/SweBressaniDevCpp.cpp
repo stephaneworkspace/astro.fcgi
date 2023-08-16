@@ -486,7 +486,6 @@ const string SweBressaniDevCpp::JsonApiV2() {
                         lon2 = calcul_ut.longitude;
                     }
                 }
-                int aspect = 100; // Nothing
                 float separation = SweBressaniDevCpp::getClosestDistance(lon1, lon2);
                 float abs_separation = abs(separation);
                 for (int k = 0; k < ASPECTS_SEMISEXTILE; ++k) {
@@ -494,19 +493,12 @@ const string SweBressaniDevCpp::JsonApiV2() {
                     int asp = angle[0];
                     int orb = angle[1];
                     if (abs(abs_separation - asp) <= orb) {
-                        aspect = k;
-                        m[make_pair(i,j)] = AspectApiV2(asp, orb, aspect);
+                        m[make_pair(i,j)] = AspectApiV2(abs(abs_separation - asp), orb, k);
                     }
                 }
             }
         }
     }
-
-
-
-
-
-
 
     Json::Value js;
     for (int i = 0; i < MAX_ASTRES; i++) {
@@ -527,7 +519,7 @@ const string SweBressaniDevCpp::JsonApiV2() {
         int k = 0;
         for (int j = i + 1; j < MAX_ASTRES + 2; j++) {
             js["aspect"][i]["liens"][k]["id"] = astresAngle[j];
-            if (astresAngle[j] == 98) {
+            /*if (astresAngle[j] == 98) {
                 js["aspect"][i]["liens"][k]["nom"] = "Asc";
             } else if (astresAngle[j] == 99) {
                 js["aspect"][i]["liens"][k]["nom"] = "Mc";
@@ -539,29 +531,28 @@ const string SweBressaniDevCpp::JsonApiV2() {
                 } else {
                     js["aspect"][i]["liens"][k]["nom"] = "";
                 }
-            }
-            //js["aspect"][i]["liens"][j]["aspect_id"] = Json::Value::null;*/
-            /*if (aspect == 100) {
-                js["aspect"][i]["liens"][j]["aspect_id"] = Json::Value::null;
-                js["aspect"][i]["liens"][j]["aspect_name"] = Json::Value::null;
-                js["aspect"][i]["liens"][j]["asset"] = Json::Value::null;
-            } else {
-                js["aspect"][i]["liens"][j]["aspect_id"] = aspect;
-                const char* res = text_aspect(aspect);
+            }*/
+            pair<int, int> key(i, j);
+            auto it = m.find(key);
+            if (it != m.end()) { // la clé existe
+                AspectApiV2 value = it->second;
+                js["aspect"][i]["liens"][k]["aspect_id"] = value.aspect;
+                /*
+                const char* res = text_aspect(value.aspect);
                 if (res != nullptr) {
                     string t_aspect(res);
-                    js["aspect"][i]["liens"][j]["aspect_name"] = t_aspect;
+                    js["aspect"][i]["liens"][k]["aspect_name"] = t_aspect;
                 } else {
-                    js["aspect"][i]["liens"][j]["aspect_name"] = "";
-                }
-                const char* res2 = asset_aspect(aspect);
-                if (res2 != nullptr) {
-                    string a_aspect(res2);
-                    js["aspect"][i]["liens"][j]["asset"] = a_aspect;
-                } else {
-                    js["aspect"][i]["liens"][j]["asset"] = "";
-                }
-            }*/
+                    js["aspect"][i]["liens"][k]["aspect_name"] = "";
+                }*/
+                //js["aspect"][i]["liens"][k]["asp"] = value.asp;
+                //js["aspect"][i]["liens"][k]["orb"] = value.orb;
+            } else {
+                js["aspect"][i]["liens"][k]["aspect_id"] = Json::Value::null;
+                //js["aspect"][i]["liens"][k]["aspect_name"] = Json::Value::null;
+                //js["aspect"][i]["liens"][k]["asp"] = Json::Value::null;
+                //js["aspect"][i]["liens"][k]["orb"] = Json::Value::null;
+            }
             k++;
         }
     }
