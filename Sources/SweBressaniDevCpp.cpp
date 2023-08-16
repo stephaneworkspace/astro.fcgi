@@ -420,7 +420,7 @@ const string SweBressaniDevCpp::JsonApiV2() {
     astresAngle[NOEUD_LUNAIRE_SUD + 1] = 98; // Asc
     astresAngle[NOEUD_LUNAIRE_SUD + 2] = 99; // Mc
     Json::Value js;
-    for (int i = 0; i < MAX_ASTRES + 2; ++i) {
+    for (int i = 0; i < MAX_ASTRES; i++) {
         js["aspect"][i]["id"] = astresAngle[i];
         if (astresAngle[i] == 98) {
             js["aspect"][i]["nom"] = "Asc";
@@ -434,6 +434,25 @@ const string SweBressaniDevCpp::JsonApiV2() {
             } else {
                 js["aspect"][i]["nom"] = "";
             }
+        }
+        int k = 0;
+        for (int j = i + 1; j < MAX_ASTRES + 2; j++) {
+            js["aspect"][i]["liens"][k]["id"] = astresAngle[j];
+            if (astresAngle[j] == 98) {
+                js["aspect"][i]["liens"][k]["nom"] = "Asc";
+            } else if (astresAngle[j] == 99) {
+                js["aspect"][i]["liens"][k]["nom"] = "Mc";
+            } else {
+                const char* res = Astre::name(astresAngle[j]);
+                if (res != nullptr) {
+                    string astre(res);
+                    js["aspect"][i]["liens"][k]["nom"] = astre;
+                } else {
+                    js["aspect"][i]["liens"][k]["nom"] = "";
+                }
+            }
+            //js["aspect"][i]["liens"][j]["aspect_id"] = Json::Value::null;*/
+            k++;
         }
     }
     Json::StreamWriterBuilder writer;
