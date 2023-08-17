@@ -652,7 +652,8 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
                 } else {
                     js["bodie"][i]["asset"] = Json::Value::null;
                 }
-                // TODO pos pour grille de 25
+                js["bodie"][i]["top"] = (i * 25) + 1; // 1 pixel de décalage pour que la bordure ne soit pas a l'extérieur du svg
+                js["bodie"][i]["left"] = (i * 25) + 1; // 1 pixel de décalage pour que la bordure ne soit pas a l'extérieur du svg
             }
             break;
         }
