@@ -652,6 +652,7 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
                 } else {
                     js["bodie"][i]["asset"] = Json::Value::null;
                 }
+                // TODO pos pour grille de 25
             }
             break;
         }
