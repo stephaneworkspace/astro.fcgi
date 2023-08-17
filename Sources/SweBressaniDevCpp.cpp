@@ -638,7 +638,7 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
             astres[NOEUD_LUNAIRE_SUD + 2] = 99; // Mc
             for (int i = 0; i < MAX_ASTRES + 2; ++i) {
                 js["bodie"][i]["id"] = astres[i];
-                const char* res1 = text_aspect(value.aspect);
+                const char* res1 = text_aspect(astres[i]);
                 if (res1 != nullptr) {
                     string t_bodie(res1);
                     js["bodie"][i]["name"] = t_bodie;
