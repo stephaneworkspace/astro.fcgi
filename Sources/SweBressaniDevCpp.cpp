@@ -384,28 +384,59 @@ const string SweBressaniDevCpp::Json() {
 }
 
 /*
- * JsonApiV2Option::Json
- * Retourne en json chaque aspect_id int ou null si aucun aspect
+ * Documentation de la méthode `JsonApiV2`
  *
- * Soleil
- * [ ] Lune
- * [ ] [ ] Mercure
- * [ ] [ ] [ ] Venus
- * [ ] [ ] [ ] [ ] Mars
- * [ ] [ ] [ ] [ ] [ ] Jupiter
- * [ ] [ ] [ ] [ ] [ ] [ ] Saturne
- * [ ] [ ] [ ] [ ] [ ] [ ] [ ] Uranus
- * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Neptune
- * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Pluton
- * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Noeud lunaire
- * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Chiron
- * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Ceres
- * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Noeud lunaire sur
- * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Ascendant
- * [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Milieu du ciel
+ * Description:
+ * La méthode `JsonApiV2` est utilisée pour générer un JSON basées sur différentes options fournies.
  *
- * JsonApiV2Option::Asset
- * Retourne les svg des aspects
+ * Signature de la méthode:
+ *    const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option)
+ *
+ * Paramètres:
+ *    - `option` (Type: `JsonApiV2Option`): Une énumération qui détermine quel type de données JSON retourner.
+ *
+ * Renvoi:
+ * La méthode renvoie une chaîne de caractères représentant un objet JSON.
+ *
+ * Comportement de la méthode:
+ * La méthode effectue des actions différentes en fonction de la valeur de l'option fournie.
+ *
+ * 1. Option `JsonGrid`:
+ *    - Retourne un SVG représentant une grille.
+ *
+ * 2. Option `JsonAspect`:
+ *      Soleil
+ *      [ ] Lune
+ *      [ ] [ ] Mercure
+ *      [ ] [ ] [ ] Venus
+ *      [ ] [ ] [ ] [ ] Mars
+ *      [ ] [ ] [ ] [ ] [ ] Jupiter
+ *      [ ] [ ] [ ] [ ] [ ] [ ] Saturne
+ *      [ ] [ ] [ ] [ ] [ ] [ ] [ ] Uranus
+ *      [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Neptune
+ *      [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Pluton
+ *      [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Noeud lunaire
+ *      [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Chiron
+ *      [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Ceres
+ *      [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Noeud lunaire sur
+ *      [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Ascendant
+ *      [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] Milieu du ciel
+ *    - Calcule les angles et les aspects entre différents astres et points de référence
+ *      comme l'Ascendant (Asc) et le Milieu du Ciel (Mc).
+ *    - Produit un JSON contenant des informations sur ces astres, leurs aspects entre eux
+ *      et leurs noms.
+ *
+ * 3. Option `JsonAspectsAsset`:
+ *    - Produit un JSON contenant des ressources associées à différents aspects.
+ *
+ * 4. Option `JsonBodiesAsset`:
+ *    - Produit un JSON contenant des ressources associées à différents corps ou astres,
+ *      comme le Soleil, la Lune, etc.
+ *
+ * Exemple d'utilisation:
+ *    SweBressaniDevCpp instance;
+ *    string output = instance.JsonApiV2(JsonApiV2Option::JsonAspect);
+ *
  */
 const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
     Json::Value js;
