@@ -18,7 +18,7 @@ using namespace sweinterfacelib;
 
 
 enum class OptionApiV2 {
-    Grid,
+    JsonGrid,
     JsonAspect,
     JsonAspectsAsset,
     JsonBodiesAsset,
@@ -35,6 +35,7 @@ struct AspectApiV2 {
 };
 
 enum class JsonApiV2Option {
+    JsonGrid,
     JsonAspect,
     JsonAspectsAsset,
     JsonBodiesAsset
@@ -51,7 +52,6 @@ public:
     const string Svg();
     const string Json();
     const string JsonApiV2(JsonApiV2Option option);
-    const string AspectSvg();
 private:
     static float getZnorm(float angle);
     static float getClosestDistance(float angle1, float angle2);

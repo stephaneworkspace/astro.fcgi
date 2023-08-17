@@ -81,8 +81,8 @@ using namespace std;
             sw_chart = params["sw_chart"] == "true" ? true : false;
             sw_json = params["sw_json"] == "true" ? true : false;
             option_api_v2 = params["option_api_v2"];
-            if (option_api_v2 == "GRID") {
-                option = OptionApiV2::Grid;
+            if (option_api_v2 == "JSON_GRID") {
+                option = OptionApiV2::JsonGrid;
             } else if (option_api_v2 == "JSON_ASPECT") {
                 option = OptionApiV2::JsonAspect;
             } else if (option_api_v2 == "JSON_ASPECTS_ASSET") {
@@ -94,16 +94,19 @@ using namespace std;
 #endif
         SweBressaniDevCpp sweInstance(year, month, day, hour, min, lat, lng, gmt, color, aspect_option);
         switch (option) {
-            case OptionApiV2::Grid: {
-                const string svgOutput = sweInstance.AspectSvg();
+            case OptionApiV2::JsonGrid: {
+                const string jsonOutput = sweInstance.JsonApiV2(JsonApiV2Option::JsonGrid);
 #if SW_DEBUG
-                cout << svgOutput << endl;
+                cout << jsonOutput << endl;
 #else
-                FCGX_PutS("Content-type:image/svg+xml\r\n\r\n", request.out);
-                if (svgOutput.length() > static_cast<string::size_type>(numeric_limits<int>::max())) {
-                    cerr << "La chaîne svg est trop longue pour être traitée par FCGX_PutStr." << endl;
+                FCGX_PutS("Content-type: application/json\r\n", request.out);
+                FCGX_PutS("Access-Control-Allow-Origin: *\r\n", request.out);
+                FCGX_PutS("Access-Control-Allow-Methods: GET\r\n", request.out);
+                FCGX_PutS("\r\n", request.out);
+                if (jsonOutput.length() > static_cast<string::size_type>(numeric_limits<int>::max())) {
+                    cerr << "La chaîne json est trop longue pour être traitée par FCGX_PutStr." << endl;
                 } else {
-                    FCGX_PutStr(svgOutput.c_str(), static_cast<int>(svgOutput.length()), request.out);
+                    FCGX_PutStr(jsonOutput.c_str(), static_cast<int>(jsonOutput.length()), request.out);
                 }
 #endif
                 break;
