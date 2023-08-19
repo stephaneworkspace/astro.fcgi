@@ -46,8 +46,8 @@ using namespace std;
         string aspect_option = params["aspect_option"].c_str();
         bool sw_chart = false;
         bool sw_json = true;
-        string option_api_v2 = "JSON_GRID";
-        OptionApiV2 option = OptionApiV2::JsonGrid;
+        ///string option_api_v2 = "JSON_ASPECT";
+        OptionApiV2 option = OptionApiV2::JsonAspect;
 #else
     while (FCGX_Accept_r(&request) == 0) {
         const char* queryString = FCGX_GetParam("QUERY_STRING", request.envp);

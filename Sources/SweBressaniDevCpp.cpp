@@ -607,12 +607,19 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
         case JsonApiV2Option::JsonAspectsAsset:
         {
             for (int i = 0; i < ASPECTS_SEMISEXTILE ; ++i) {
-                const char* res2 = asset_aspect(i);
-                if (res2 != nullptr) {
-                    string a_aspect(res2);
+                const char* res1 = asset_aspect(i);
+                if (res1 != nullptr) {
+                    string a_aspect(res1);
                     js["aspect"][i]["asset"] = a_aspect;
                 } else {
                     js["aspect"][i]["asset"] = Json::Value::null;
+                }
+                const char* res2 = text_aspect(i);
+                if (res2 != nullptr) {
+                    string t_aspect(res2);
+                    js["aspect"][i]["name"] = t_aspect;
+                } else {
+                    js["aspect"][i]["name"] = Json::Value::null;
                 }
             }
             break;
