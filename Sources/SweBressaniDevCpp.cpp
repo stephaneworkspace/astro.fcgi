@@ -394,7 +394,7 @@ const string SweBressaniDevCpp::Json() {
  *
  * Paramètres:
  *    - `option` (Type: `JsonApiV2Option`): Une énumération qui détermine quel type de données JSON retourner.
- *    - `color` (Type: `ìnt`): Couleur 0 ou 1
+ *    - `i_color` (Type: `ìnt`): Couleur 0 ou 1
  *
  * Renvoi:
  * La méthode renvoie une chaîne de caractères représentant un objet JSON.
@@ -439,12 +439,12 @@ const string SweBressaniDevCpp::Json() {
  *    string output = instance.JsonApiV2(JsonApiV2Option::JsonAspect, 1);
  *
  */
-const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option, int color) {
+const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option, int i_color) {
     Json::Value js;
     switch (option) {
         case JsonApiV2Option::JsonGrid:
         {
-            string svg = sweinterfacelib::grille_aspect_svg(color);
+            string svg = sweinterfacelib::grille_aspect_svg(i_color);
             js["grille"] = svg;
             break;
         }
