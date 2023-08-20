@@ -444,8 +444,10 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
     switch (option) {
         case JsonApiV2Option::JsonGrid:
         {
-            string svg = sweinterfacelib::grille_aspect_svg(i_color);
-            js["grille"] = svg;
+            string color_0 = sweinterfacelib::grille_aspect_svg(0);
+            string color_1 = sweinterfacelib::grille_aspect_svg(1);
+            js["grille"]["color"] = color_0;
+            js["grille"]["color"] = color_1;
             break;
         }
         case JsonApiV2Option::JsonAspect:
