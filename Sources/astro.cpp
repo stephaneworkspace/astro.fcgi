@@ -93,18 +93,10 @@ using namespace std;
             }
         }
 #endif
-        int i_color = 0;
-        try {
-            i_color = std::stoi(color);
-        } catch (const std::invalid_argument& e) {
-            // L'exception est attrapée, mais rien n'est fait. La valeur de 'i' reste 0.
-        } catch (const std::out_of_range& e) {
-            // L'exception est attrapée, mais rien n'est fait. La valeur de 'i' reste 0.
-        }
         SweBressaniDevCpp sweInstance(year, month, day, hour, min, lat, lng, gmt, color, aspect_option);
         switch (option) {
             case OptionApiV2::JsonGrid: {
-                const string jsonOutput = sweInstance.JsonApiV2(JsonApiV2Option::JsonGrid, i_color);
+                const string jsonOutput = sweInstance.JsonApiV2(JsonApiV2Option::JsonGrid);
 #if SW_DEBUG
                 cout << jsonOutput << endl;
 #else
@@ -122,7 +114,7 @@ using namespace std;
             }
             case OptionApiV2::JsonAspect:
             {
-                const string jsonOutput = sweInstance.JsonApiV2(JsonApiV2Option::JsonAspect, i_color);
+                const string jsonOutput = sweInstance.JsonApiV2(JsonApiV2Option::JsonAspect);
 #if SW_DEBUG
                 cout << jsonOutput << endl;
 #else
@@ -140,7 +132,7 @@ using namespace std;
             }
             case OptionApiV2::JsonAspectsAsset:
             {
-                const string jsonOutput = sweInstance.JsonApiV2(JsonApiV2Option::JsonAspectsAsset, i_color);
+                const string jsonOutput = sweInstance.JsonApiV2(JsonApiV2Option::JsonAspectsAsset);
 #if SW_DEBUG
                 cout << jsonOutput << endl;
 #else
@@ -158,7 +150,7 @@ using namespace std;
             }
             case OptionApiV2::JsonBodiesAsset:
             {
-                const string jsonOutput = sweInstance.JsonApiV2(JsonApiV2Option::JsonBodiesAsset, i_color);
+                const string jsonOutput = sweInstance.JsonApiV2(JsonApiV2Option::JsonBodiesAsset);
 #if SW_DEBUG
                 cout << jsonOutput << endl;
 #else
