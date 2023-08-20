@@ -1,6 +1,7 @@
 #include <fcgi_stdio.h>
 #include "fcgio.h"
 #include <string>
+#include <stdexcept>
 #include "SweBressaniDevCpp.h"
 
 using namespace std;
