@@ -394,6 +394,7 @@ const string SweBressaniDevCpp::Json() {
  *
  * Paramètres:
  *    - `option` (Type: `JsonApiV2Option`): Une énumération qui détermine quel type de données JSON retourner.
+ *    - `color` (Type: `ìnt`): Couleur 0 ou 1
  *
  * Renvoi:
  * La méthode renvoie une chaîne de caractères représentant un objet JSON.
@@ -435,7 +436,7 @@ const string SweBressaniDevCpp::Json() {
  *
  * Exemple d'utilisation:
  *    SweBressaniDevCpp instance;
- *    string output = instance.JsonApiV2(JsonApiV2Option::JsonAspect);
+ *    string output = instance.JsonApiV2(JsonApiV2Option::JsonAspect, 1);
  *
  */
 const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option, int color) {
