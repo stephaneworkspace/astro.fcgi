@@ -51,7 +51,7 @@ public:
     static map<string, string> parseQueryString(string& query);
     const string Svg();
     const string Json();
-    const string JsonApiV2(JsonApiV2Option option);
+    const string JsonApiV2(JsonApiV2Option option, int color);
 private:
     static float getZnorm(float angle);
     static float getClosestDistance(float angle1, float angle2);

@@ -95,7 +95,7 @@ using namespace std;
         SweBressaniDevCpp sweInstance(year, month, day, hour, min, lat, lng, gmt, color, aspect_option);
         switch (option) {
             case OptionApiV2::JsonGrid: {
-                const string jsonOutput = sweInstance.JsonApiV2(JsonApiV2Option::JsonGrid);
+                const string jsonOutput = sweInstance.JsonApiV2(JsonApiV2Option::JsonGrid, color);
 #if SW_DEBUG
                 cout << jsonOutput << endl;
 #else

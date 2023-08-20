@@ -438,7 +438,7 @@ const string SweBressaniDevCpp::Json() {
  *    string output = instance.JsonApiV2(JsonApiV2Option::JsonAspect);
  *
  */
-const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
+const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option, int color) {
     Json::Value js;
     switch (option) {
         case JsonApiV2Option::JsonGrid:
