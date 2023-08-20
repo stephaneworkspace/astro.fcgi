@@ -446,8 +446,8 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
         {
             string color_0 = sweinterfacelib::grille_aspect_svg(0);
             string color_1 = sweinterfacelib::grille_aspect_svg(1);
-            js["grille"]["color"] = color_0;
-            js["grille"]["color"] = color_1;
+            js["grille"][0] = color_0;
+            js["grille"][1] = color_1;
             break;
         }
         case JsonApiV2Option::JsonAspect:
