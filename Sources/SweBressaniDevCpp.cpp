@@ -449,7 +449,7 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
             string svg0 = sweinterfacelib::theme_astral_empty_svg(year, month, day, hour, min, lat, lng, gmt, path, 0, a_o);
             string svg1 = sweinterfacelib::theme_astral_empty_svg(year, month, day, hour, min, lat, lng, gmt, path, 1, a_o);
             js["chart"][0] = svg0;
-            js["chart"][0] = svg1;
+            js["chart"][1] = svg1;
             break;
         }
         case JsonApiV2Option::JsonGrid:
