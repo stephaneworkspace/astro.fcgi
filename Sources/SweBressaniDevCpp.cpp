@@ -450,6 +450,20 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
             string svg1 = sweinterfacelib::theme_astral_empty_svg(year, month, day, hour, min, lat, lng, gmt, path, 1, a_o);
             js["chart"][0] = svg0;
             js["chart"][1] = svg1;
+            sweinterfacelib::MaisonOutput* mo0 = sweinterfacelib::theme_astral_maison_pos(year, month, day, hour, min, lat, lng, gmt, path, 0, a_o);
+            sweinterfacelib::MaisonOutput* mo1 = sweinterfacelib::theme_astral_maison_pos(year, month, day, hour, min, lat, lng, gmt, path, 1, a_o);
+            int j = 0;
+            for (int i = 1; i < 13; ++i) {
+                js["house"][j]["width"] = mo0[i].width;
+                js["house"][j]["height"] = mo0[i].height;
+                js["house"][j]["x"] = mo0[i].x;
+                js["house"][j]["y"] = mo0[i].y;
+                string svgh0 = sweinterfacelib::asset_house(i, 0);
+                string svgh1 = sweinterfacelib::asset_house(i, 1);
+                js["house"][j]["asset"][0] = svgh0;
+                js["house"][j]["asset"][1] = svgh1;
+                j++;
+            }
             break;
         }
         case JsonApiV2Option::JsonGrid:
