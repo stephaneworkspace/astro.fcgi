@@ -47,8 +47,8 @@ using namespace std;
         string aspect_option = params["aspect_option"].c_str();
         bool sw_chart = false;
         bool sw_json = true;
-        ///string option_api_v2 = "JSON_ASPECT";
-        OptionApiV2 option = OptionApiV2::JsonAspect;
+        ///string option_api_v2 = "JSON_CHART_GRID";
+        OptionApiV2 option = OptionApiV2::JsonChartGrid;
 #else
     while (FCGX_Accept_r(&request) == 0) {
         const char* queryString = FCGX_GetParam("QUERY_STRING", request.envp);
@@ -82,7 +82,9 @@ using namespace std;
             sw_chart = params["sw_chart"] == "true" ? true : false;
             sw_json = params["sw_json"] == "true" ? true : false;
             option_api_v2 = params["option_api_v2"];
-            if (option_api_v2 == "JSON_GRID") {
+            if (option_api_v2 == "JSON_CHART_GRID") {
+                option = OptionApiV2::JsonChartGrid;
+            } else if (option_api_v2 == "JSON_GRID") {
                 option = OptionApiV2::JsonGrid;
             } else if (option_api_v2 == "JSON_ASPECT") {
                 option = OptionApiV2::JsonAspect;
@@ -92,9 +94,27 @@ using namespace std;
                 option = OptionApiV2::JsonBodiesAsset;
             }
         }
+    }
 #endif
         SweBressaniDevCpp sweInstance(year, month, day, hour, min, lat, lng, gmt, color, aspect_option);
         switch (option) {
+            case OptionApiV2::JsonChartGrid: {
+                const string jsonOutput = sweInstance.JsonApiV2(JsonApiV2Option::JsonChartGrid);
+#if SW_DEBUG
+                cout << jsonOutput << endl;
+#else
+                FCGX_PutS("Content-type: application/json\r\n", request.out);
+                FCGX_PutS("Access-Control-Allow-Origin: *\r\n", request.out);
+                FCGX_PutS("Access-Control-Allow-Methods: GET\r\n", request.out);
+                FCGX_PutS("\r\n", request.out);
+                if (jsonOutput.length() > static_cast<string::size_type>(numeric_limits<int>::max())) {
+                    cerr << "La chaîne json est trop longue pour être traitée par FCGX_PutStr." << endl;
+                } else {
+                    FCGX_PutStr(jsonOutput.c_str(), static_cast<int>(jsonOutput.length()), request.out);
+                }
+#endif
+                break;
+            }
             case OptionApiV2::JsonGrid: {
                 const string jsonOutput = sweInstance.JsonApiV2(JsonApiV2Option::JsonGrid);
 #if SW_DEBUG

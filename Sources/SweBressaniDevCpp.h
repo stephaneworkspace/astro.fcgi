@@ -18,6 +18,7 @@ using namespace sweinterfacelib;
 
 
 enum class OptionApiV2 {
+    JsonChartGrid,
     JsonGrid,
     JsonAspect,
     JsonAspectsAsset,
@@ -35,6 +36,7 @@ struct AspectApiV2 {
 };
 
 enum class JsonApiV2Option {
+    JsonChartGrid,
     JsonGrid,
     JsonAspect,
     JsonAspectsAsset,
