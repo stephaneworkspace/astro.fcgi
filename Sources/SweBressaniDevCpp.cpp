@@ -446,8 +446,10 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
         {
             const char *path = "./";
             const char *a_o = aspect_option.c_str();
-            string svg = sweinterfacelib::theme_astral_empty_svg(year, month, day, hour, min, lat, lng, gmt, path, color, a_o);
-            js["chart"] = svg; // 600 x 600
+            string svg0 = sweinterfacelib::theme_astral_empty_svg(year, month, day, hour, min, lat, lng, gmt, path, 0, a_o);
+            string svg1 = sweinterfacelib::theme_astral_empty_svg(year, month, day, hour, min, lat, lng, gmt, path, 1, a_o);
+            js["chart"][0] = svg0;
+            js["chart"][0] = svg1;
             break;
         }
         case JsonApiV2Option::JsonGrid:
