@@ -94,7 +94,6 @@ using namespace std;
                 option = OptionApiV2::JsonBodiesAsset;
             }
         }
-    }
 #endif
         SweBressaniDevCpp sweInstance(year, month, day, hour, min, lat, lng, gmt, color, aspect_option);
         switch (option) {
