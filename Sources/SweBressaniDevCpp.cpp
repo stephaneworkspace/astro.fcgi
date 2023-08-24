@@ -453,7 +453,50 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
             sweinterfacelib::MaisonOutput* mo0 = sweinterfacelib::theme_astral_maison_pos(year, month, day, hour, min, lat, lng, gmt, path, 0, a_o);
             sweinterfacelib::MaisonOutput* mo1 = sweinterfacelib::theme_astral_maison_pos(year, month, day, hour, min, lat, lng, gmt, path, 1, a_o);
             int j = 0;
+            string cr = "";
             for (int i = 1; i < 13; ++i) {
+                switch (i) {
+                    case 1:
+                        cr = "I";
+                        break;
+                    case 2:
+                        cr = "II";
+                        break;
+                    case 3:
+                        cr = "III";
+                        break;
+                    case 4:
+                        cr = "IV";
+                        break;
+                    case 5:
+                        cr = "V";
+                        break;
+                    case 6:
+                        cr = "VI";
+                        break;
+                    case 7:
+                        cr = "VII";
+                        break;
+                    case 8:
+                        cr = "VIII";
+                        break;
+                    case 9:
+                        cr = "IX";
+                        break;
+                    case 10:
+                        cr = "X";
+                        break;
+                    case 11:
+                        cr = "XI";
+                        break;
+                    case 12:
+                        cr = "XII";
+                        break;
+                }
+                string lien = "/la-maison-" + cr;
+                string ancre = "#DEFINITION";
+                js["house"][j]["lien"] = lien;
+                js["house"][j]["ancre"] = ancre;
                 js["house"][j]["width"] = mo0[i].width;
                 js["house"][j]["height"] = mo0[i].height;
                 js["house"][j]["x"] = mo0[i].x;
