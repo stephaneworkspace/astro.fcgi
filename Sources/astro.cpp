@@ -18,7 +18,7 @@ using namespace std;
     FCGX_InitRequest(&request, 0, 0);
 
 #if SW_DEBUG
-    if (argc != 10 + 1) {
+    if (argc != 11 + 1) {
         std::cerr << "Manque les arguments" << std::endl;
         return 1;
     }
@@ -33,7 +33,9 @@ using namespace std;
                 "&lng=" + string(argv[7]) +
                 "&gmt=" + string(argv[8]) +
                 "&color=" + string(argv[9]) +
-                "&aspect_option=" + string(argv[10]);
+                "&aspect_option=" + string(argv[10]) +
+                "&option=" +string(argv[11])
+                ;
         map<string, string> params = SweBressaniDevCpp::parseQueryString(simulatedQueryString);
         string year = params["year"].c_str();
         string month = params["month"].c_str();
@@ -47,8 +49,19 @@ using namespace std;
         string aspect_option = params["aspect_option"].c_str();
         bool sw_chart = false;
         bool sw_json = true;
-        ///string option_api_v2 = "JSON_CHART_GRID";
+        string option_api_v2 = params["option"].c_str();
         OptionApiV2 option = OptionApiV2::JsonChartGrid;
+        if (option_api_v2 == "JSON_CHART_GRID") {
+            option = OptionApiV2::JsonChartGrid;
+        } else if (option_api_v2 == "JSON_GRID") {
+            option = OptionApiV2::JsonGrid;
+        } else if (option_api_v2 == "JSON_ASPECT") {
+            option = OptionApiV2::JsonAspect;
+        } else if (option_api_v2 == "JSON_ASPECTS_ASSET") {
+            option = OptionApiV2::JsonAspectsAsset;
+        } else if (option_api_v2 == "JSON_BODIES_ASSET") {
+            option = OptionApiV2::JsonBodiesAsset;
+        }
 #else
     while (FCGX_Accept_r(&request) == 0) {
         const char* queryString = FCGX_GetParam("QUERY_STRING", request.envp);
