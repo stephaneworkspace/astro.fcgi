@@ -450,8 +450,7 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
             string svg1 = sweinterfacelib::theme_astral_empty_svg(year, month, day, hour, min, lat, lng, gmt, path, 1, a_o);
             js["chart"][0] = svg0;
             js["chart"][1] = svg1;
-            const sweinterfacelib::MaisonOutput* mo0 = sweinterfacelib::theme_astral_maison_pos(year, month, day, hour, min, lat, lng, gmt, path, 0, a_o);
-            const sweinterfacelib::MaisonOutput* mo1 = sweinterfacelib::theme_astral_maison_pos(year, month, day, hour, min, lat, lng, gmt, path, 1, a_o);
+            const sweinterfacelib::PosAsset* pam = sweinterfacelib::theme_astral_maison_pos(year, month, day, hour, min, lat, lng, gmt, path);
             int j = 0;
             string cr = "";
             for (int i = 1; i < 13; ++i) {
@@ -497,14 +496,31 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
                 string ancre = "#DEFINITION";
                 js["house"][j]["lien"] = lien;
                 js["house"][j]["ancre"] = ancre;
-                js["house"][j]["width"] = mo0[i].width;
-                js["house"][j]["height"] = mo0[i].height;
-                js["house"][j]["x"] = mo0[i].x;
-                js["house"][j]["y"] = mo0[i].y;
+                js["house"][j]["width"] = pam[i].width;
+                js["house"][j]["height"] = pam[i].height;
+                js["house"][j]["x"] = pam[i].x;
+                js["house"][j]["y"] = pam[i].y;
                 string svgh0 = sweinterfacelib::asset_house(i, 0);
                 string svgh1 = sweinterfacelib::asset_house(i, 1);
                 js["house"][j]["asset"][0] = svgh0;
                 js["house"][j]["asset"][1] = svgh1;
+                j++;
+            }
+            const sweinterfacelib::PosAsset* pas = sweinterfacelib::theme_astral_signe_pos(year, month, day, hour, min, lat, lng, gmt, path);
+            j = 0;
+            for (int i = 1; i < 13; ++i) {
+                string lien = "/todo";
+                string ancre = "#DEFINITION";
+                js["signe"][j]["lien"] = lien;
+                js["signe"][j]["ancre"] = ancre;
+                js["signe"][j]["width"] = pas[i].width;
+                js["signe"][j]["height"] = pas[i].height;
+                js["signe"][j]["x"] = pas[i].x;
+                js["signe"][j]["y"] = pas[i].y;
+                string svgh0 = sweinterfacelib::asset_sign(i);
+                string svgh1 = sweinterfacelib::asset_sign(i);
+                js["signe"][j]["asset"][0] = svgh0;
+                js["signe"][j]["asset"][1] = svgh1;
                 j++;
             }
             break;
