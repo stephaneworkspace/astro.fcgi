@@ -521,6 +521,8 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
                 string svgh1 = sweinterfacelib::asset_sign(i);
                 js["signe"][j]["asset"][0] = svgh0;
                 js["signe"][j]["asset"][1] = svgh1;
+                string nom = "TODO";
+                js["signe"][j]["nom"] = nom;
                 j++;
             }
             break;
