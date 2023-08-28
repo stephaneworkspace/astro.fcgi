@@ -525,14 +525,15 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
                 js["signe"][j]["nom"] = nom;
                 j++;
             }
-            const sweinterfacelib::PosAstreAsset* paa = sweinterfacelib::theme_astral_astre_pos(year, month, day, hour, min, lat, lng, gmt, path);
+            const sweinterfacelib::PosAstreAsset* paa = sweinterfacelib::theme_astral_astre_pos(year, month, day, hour, min, lat, lng, gmt, path, a_o);
             j = 0;
             for (int i = 0; i < MAX_ASTRES; ++i) {
                 string lien = "/todo";
                 string ancre = "#DEFINITION";
                 js["astre"][j]["lien"] = lien;
                 js["astre"][j]["ancre"] = ancre;
-                js["astre"][j]["nom"] = paa[i].retrograde ? string(paa[i].nom) + " Retrograde" : paa[i].nom;
+                js["astre"][j]["nom"] = string(paa[i].nom) == "NULL" ?
+                        Json::Value::null : paa[i].retrograde? string(paa[i].nom) + " Retrograde" : paa[i].nom;
                 js["astre"][j]["astre"]["width"] = paa[i].astre.width;
                 js["astre"][j]["astre"]["height"] = paa[i].astre.height;
                 js["astre"][j]["astre"]["x"] = paa[i].astre.x;
