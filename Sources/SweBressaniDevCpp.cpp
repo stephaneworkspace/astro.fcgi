@@ -521,8 +521,34 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
                 string svgh1 = sweinterfacelib::asset_sign(i);
                 js["signe"][j]["asset"][0] = svgh0;
                 js["signe"][j]["asset"][1] = svgh1;
-                string nom = "TODO";
+                string nom = "TODO"; // TODO
                 js["signe"][j]["nom"] = nom;
+                j++;
+            }
+            const sweinterfacelib::PosAstreAsset* paa = sweinterfacelib::theme_astral_astre_pos(year, month, day, hour, min, lat, lng, gmt, path);
+            j = 0;
+            for (int i = 0; i < MAX_ASTRES; ++i) {
+                string lien = "/todo";
+                string ancre = "#DEFINITION";
+                js["astre"][j]["lien"] = lien;
+                js["astre"][j]["ancre"] = ancre;
+                js["signe"][j]["nom"] = paa[i].retrograde ? string(paa[i].nom) + "Retrograde" : paa[i].nom;
+                js["astre"][j]["astre"]["width"] = paa[i].astre.width;
+                js["astre"][j]["astre"]["height"] = paa[i].astre.height;
+                js["astre"][j]["astre"]["x"] = paa[i].astre.x;
+                js["astre"][j]["astre"]["y"] = paa[i].astre.y;
+                const char* svg0 = sweinterfacelib::asset_bodie(i);
+                const char* svg1 = sweinterfacelib::asset_bodie(i);
+                js["astre"][j]["astre_r"]["asset"][0] = svg0;
+                js["astre"][j]["astre_r"]["asset"][1] = svg1;
+                js["astre"][j]["astre_r"]["width"] = paa[i].astre_r.width;
+                js["astre"][j]["astre_r"]["height"] = paa[i].astre_r.height;
+                js["astre"][j]["astre_r"]["x"] = paa[i].astre_r.x;
+                js["astre"][j]["astre_r"]["y"] = paa[i].astre_r.y;
+                const char* svgr0 = sweinterfacelib::asset_bodie(i);
+                const char* svgr1 = sweinterfacelib::asset_bodie(i);
+                js["astre"][j]["astre_r"]["asset"][0] = svgr0;
+                js["astre"][j]["astre_r"]["asset"][1] = svgr1;
                 j++;
             }
             break;
