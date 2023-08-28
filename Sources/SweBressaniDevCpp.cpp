@@ -532,7 +532,7 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
                 string ancre = "#DEFINITION";
                 js["astre"][j]["lien"] = lien;
                 js["astre"][j]["ancre"] = ancre;
-                js["signe"][j]["nom"] = paa[i].retrograde ? string(paa[i].nom) + "Retrograde" : paa[i].nom;
+                js["astre"][j]["nom"] = paa[i].retrograde ? string(paa[i].nom) + "Retrograde" : paa[i].nom;
                 js["astre"][j]["astre"]["width"] = paa[i].astre.width;
                 js["astre"][j]["astre"]["height"] = paa[i].astre.height;
                 js["astre"][j]["astre"]["x"] = paa[i].astre.x;
