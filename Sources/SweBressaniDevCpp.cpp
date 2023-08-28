@@ -545,8 +545,8 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
                 js["astre"][j]["astre_r"]["height"] = paa[i].astre_r.height;
                 js["astre"][j]["astre_r"]["x"] = paa[i].astre_r.x;
                 js["astre"][j]["astre_r"]["y"] = paa[i].astre_r.y;
-                const char* svgr0 = sweinterfacelib::asset_bodie(i);
-                const char* svgr1 = sweinterfacelib::asset_bodie(i);
+                const char* svgr0 = sweinterfacelib::asset_bodie_r(i);
+                const char* svgr1 = sweinterfacelib::asset_bodie_r(i);
                 js["astre"][j]["astre_r"]["asset"][0] = svgr0;
                 js["astre"][j]["astre_r"]["asset"][1] = svgr1;
                 j++;
