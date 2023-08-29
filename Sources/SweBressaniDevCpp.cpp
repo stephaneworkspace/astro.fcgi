@@ -533,7 +533,7 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
                 js["astre"][j]["lien"] = lien;
                 js["astre"][j]["ancre"] = ancre;
                 js["astre"][j]["id"] = paa[i].id;
-                js["astre"][j]["nom"] = string(paa[i].id) == 0 ?
+                js["astre"][j]["nom"] = paa[i].id == 0 ?
                         Json::Value::null : paa[i].retrograde? string(paa[i].nom) + " Retrograde" : paa[i].nom;
                 js["astre"][j]["astre"]["width"] = paa[i].astre.width;
                 js["astre"][j]["astre"]["height"] = paa[i].astre.height;
