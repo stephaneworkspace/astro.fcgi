@@ -118,7 +118,8 @@ using namespace std;
                 FCGX_PutS("Content-type: application/json\r\n", request.out);
                 FCGX_PutS("Access-Control-Allow-Origin: *\r\n", request.out);
                 FCGX_PutS("Access-Control-Allow-Methods: GET\r\n", request.out);
-                FCGX_PutS("\r\n", request.out);
+                //FCGX_PutS("\r\n", request.out);
+                FCGX_PutS("\r\n", aspect_option);
                 if (jsonOutput.length() > static_cast<string::size_type>(numeric_limits<int>::max())) {
                     cerr << "La chaîne json est trop longue pour être traitée par FCGX_PutStr." << endl;
                 } else {
