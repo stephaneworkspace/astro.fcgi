@@ -802,7 +802,7 @@ float SweBressaniDevCpp::getClosestDistance(float angle1, float angle2)  {
     return getZnorm(angle2 - angle1);
 }
 
-const string SweBressaniDevCpp::decodeComa(const string& str) {
+string SweBressaniDevCpp::decodeComa(const string& str) {
     std::string decoded = "";
     for (size_t i = 0; i < str.length(); ++i) {
         if (i <= str.length() - 3 && str.substr(i, 3) == "%2C") {

@@ -57,7 +57,7 @@ public:
 private:
     static float getZnorm(float angle);
     static float getClosestDistance(float angle1, float angle2);
-    static const string decodeComa(const string& str);
+    static string decodeComa(const string& str);
 
     int year;
     int month;
