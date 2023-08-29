@@ -777,8 +777,6 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
             astres_aspect[NOEUD_LUNAIRE_SUD + 1] = 98;
             astres_aspect[NOEUD_LUNAIRE_SUD + 2] = 99;
 
-
-
             for (int i = 0; i < MAX_ASTRES + 2; ++i) {
                 js["bodie"][i]["id"] = astres[i];
                 const char* res1 = text_bodie(astres[i]);
