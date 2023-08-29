@@ -49,7 +49,7 @@ public:
         float lat = 46.12, float lng = 6.09, int gmt = 2, int color=0, const string& aspect_option="0");
     SweBressaniDevCpp(const string& y, const string& m, const string& d,
         const string& h, const string& mn, const string& la,
-        const string& ln, const string& gm, const string& c, const string& a);
+        const string& ln, const string& gm, const string& c, const string& ao);
     static map<string, string> parseQueryString(string& query);
     const string Svg();
     const string Json();
