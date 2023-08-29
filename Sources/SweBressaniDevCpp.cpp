@@ -509,7 +509,7 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
             const sweinterfacelib::PosAsset* pas = sweinterfacelib::theme_astral_signe_pos(year, month, day, hour, min, lat, lng, gmt, path);
             j = 0;
             for (int i = 1; i < 13; ++i) {
-                string lien = "/todo" + aspect_option;
+                string lien = "/todo";
                 string ancre = "#DEFINITION";
                 js["signe"][j]["lien"] = lien;
                 js["signe"][j]["ancre"] = ancre;
@@ -800,4 +800,17 @@ float SweBressaniDevCpp::getZnorm(float angle) {
 
 float SweBressaniDevCpp::getClosestDistance(float angle1, float angle2)  {
     return getZnorm(angle2 - angle1);
+}
+
+const string SweBressaniDevCpp::decodeComa(const string& str) {
+    std::string decoded = "";
+    for (size_t i = 0; i < str.length(); ++i) {
+        if (i <= str.length() - 3 && str.substr(i, 3) == "%2C") {
+            decoded += ',';
+            i += 2; // Avance de 2 caractères supplémentaires
+        } else {
+            decoded += str[i];
+        }
+    }
+    return decoded;
 }

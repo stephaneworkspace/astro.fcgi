@@ -91,7 +91,7 @@ using namespace std;
             lng = params["lng"];
             gmt = params["gmt"];
             color = params["color"];
-            aspect_option = params["aspect_option"];
+            aspect_option = SweBressaniDevCpp::decodeComma(params["aspect_option"]);
             sw_chart = params["sw_chart"] == "true" ? true : false;
             sw_json = params["sw_json"] == "true" ? true : false;
             option_api_v2 = params["option_api_v2"];
