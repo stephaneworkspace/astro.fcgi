@@ -528,30 +528,31 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
             const sweinterfacelib::PosAstreAsset* paa = sweinterfacelib::theme_astral_astre_pos(year, month, day, hour, min, lat, lng, gmt, path, a_o);
             j = 0;
             for (int i = 0; i < MAX_ASTRES; ++i) {
-                string lien = "/todo";
-                string ancre = "#DEFINITION";
-                js["astre"][j]["lien"] = lien;
-                js["astre"][j]["ancre"] = ancre;
-                js["astre"][j]["id"] = paa[i].id == -1 ? Json::Value::null : paa[i].id;
-                js["astre"][j]["nom"] = paa[i].id == -1 ?
-                        Json::Value::null : paa[i].retrograde? string(paa[i].nom) + " Retrograde" : paa[i].nom;
-                js["astre"][j]["astre"]["width"] = paa[i].astre.width;
-                js["astre"][j]["astre"]["height"] = paa[i].astre.height;
-                js["astre"][j]["astre"]["x"] = paa[i].astre.x;
-                js["astre"][j]["astre"]["y"] = paa[i].astre.y;
-                const char* svg0 = sweinterfacelib::asset_bodie(paa[i].id);
-                const char* svg1 = sweinterfacelib::asset_bodie(paa[i].id);
-                js["astre"][j]["astre"]["asset"][0] = svg0;
-                js["astre"][j]["astre"]["asset"][1] = svg1;
-                js["astre"][j]["astre_r"]["width"] = paa[i].astre_r.width;
-                js["astre"][j]["astre_r"]["height"] = paa[i].astre_r.height;
-                js["astre"][j]["astre_r"]["x"] = paa[i].astre_r.x;
-                js["astre"][j]["astre_r"]["y"] = paa[i].astre_r.y;
-                const char* svgr0 = sweinterfacelib::asset_bodie_r(paa[i].id);
-                const char* svgr1 = sweinterfacelib::asset_bodie_r(paa[i].id);
-                js["astre"][j]["astre_r"]["asset"][0] = svgr0;
-                js["astre"][j]["astre_r"]["asset"][1] = svgr1;
-                j++;
+                if (paa[i].id > 0) {
+                    string lien = "/todo";
+                    string ancre = "#DEFINITION";
+                    js["astre"][j]["lien"] = lien;
+                    js["astre"][j]["ancre"] = ancre;
+                    js["astre"][j]["id"] = paa[i].id;
+                    js["astre"][j]["nom"] = paa[i].retrograde ? string(paa[i].nom) + " Retrograde" : paa[i].nom;
+                    js["astre"][j]["astre"]["width"] = paa[i].astre.width;
+                    js["astre"][j]["astre"]["height"] = paa[i].astre.height;
+                    js["astre"][j]["astre"]["x"] = paa[i].astre.x;
+                    js["astre"][j]["astre"]["y"] = paa[i].astre.y;
+                    const char* svg0 = sweinterfacelib::asset_bodie(paa[i].id);
+                    const char* svg1 = sweinterfacelib::asset_bodie(paa[i].id);
+                    js["astre"][j]["astre"]["asset"][0] = svg0;
+                    js["astre"][j]["astre"]["asset"][1] = svg1;
+                    js["astre"][j]["astre_r"]["width"] = paa[i].astre_r.width;
+                    js["astre"][j]["astre_r"]["height"] = paa[i].astre_r.height;
+                    js["astre"][j]["astre_r"]["x"] = paa[i].astre_r.x;
+                    js["astre"][j]["astre_r"]["y"] = paa[i].astre_r.y;
+                    const char* svgr0 = sweinterfacelib::asset_bodie_r(paa[i].id);
+                    const char* svgr1 = sweinterfacelib::asset_bodie_r(paa[i].id);
+                    js["astre"][j]["astre_r"]["asset"][0] = svgr0;
+                    js["astre"][j]["astre_r"]["asset"][1] = svgr1;
+                    j++;
+                }
             }
             break;
         }
