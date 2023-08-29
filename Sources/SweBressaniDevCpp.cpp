@@ -509,7 +509,7 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
             const sweinterfacelib::PosAsset* pas = sweinterfacelib::theme_astral_signe_pos(year, month, day, hour, min, lat, lng, gmt, path);
             j = 0;
             for (int i = 1; i < 13; ++i) {
-                string lien = "/todo";
+                string lien = "/todo" + aspect_option;
                 string ancre = "#DEFINITION";
                 js["signe"][j]["lien"] = lien;
                 js["signe"][j]["ancre"] = ancre;
