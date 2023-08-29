@@ -789,19 +789,6 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
     return output;
 }
 
-float SweBressaniDevCpp::getZnorm(float angle) {
-    int ang = static_cast<int>(angle) % 360;
-    if (ang <= 360 / 2) {
-        return static_cast<float>(ang);
-    } else {
-        return angle - 360.0f;
-    }
-}
-
-float SweBressaniDevCpp::getClosestDistance(float angle1, float angle2)  {
-    return getZnorm(angle2 - angle1);
-}
-
 string SweBressaniDevCpp::decodeComa(const string& str) {
     std::string decoded = "";
     for (size_t i = 0; i < str.length(); ++i) {
@@ -813,4 +800,17 @@ string SweBressaniDevCpp::decodeComa(const string& str) {
         }
     }
     return decoded;
+}
+
+float SweBressaniDevCpp::getZnorm(float angle) {
+    int ang = static_cast<int>(angle) % 360;
+    if (ang <= 360 / 2) {
+        return static_cast<float>(ang);
+    } else {
+        return angle - 360.0f;
+    }
+}
+
+float SweBressaniDevCpp::getClosestDistance(float angle1, float angle2)  {
+    return getZnorm(angle2 - angle1);
 }
