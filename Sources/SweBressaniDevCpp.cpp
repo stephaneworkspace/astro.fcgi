@@ -528,7 +528,7 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
             const sweinterfacelib::PosAstreAsset* paa = sweinterfacelib::theme_astral_astre_pos(year, month, day, hour, min, lat, lng, gmt, path, a_o);
             j = 0;
             for (int i = 0; i < MAX_ASTRES; ++i) {
-                if (paa[i].id > 0) {
+                if (paa[i].id >= 0) {
                     string lien = "/todo";
                     string ancre = "#DEFINITION";
                     js["astre"][j]["lien"] = lien;
