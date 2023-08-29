@@ -758,29 +758,88 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
             astres[NOEUD_LUNAIRE_SUD] = ASTRE_NOEUD_LUNAIRE_SUD;
             astres[NOEUD_LUNAIRE_SUD + 1] = 98; // Asc
             astres[NOEUD_LUNAIRE_SUD + 2] = 99; // Mc
-            for (int i = 0; i < MAX_ASTRES + 2; ++i) {
-                js["bodie"][i]["id"] = astres[i];
-                const char* res1 = text_bodie(astres[i]);
-                if (res1 != nullptr) {
-                    string t_bodie(res1);
-                    js["bodie"][i]["name"] = t_bodie;
-                } else {
-                    js["bodie"][i]["name"] = "";
+
+            // Filtrage
+            const char *a_o = aspect_option.c_str();
+            int* astres_aspect = new int[MAX_ASTRES + 2];
+            astres_aspect[SOLEIL] = ASTRE_SOLEIL;
+            astres_aspect[LUNE] = ASTRE_LUNE;
+            astres_aspect[MERCURE] = ASTRE_MERCURE;
+            astres_aspect[VENUS] = ASTRE_VENUS;
+            astres_aspect[MARS] = ASTRE_MARS;
+            astres_aspect[JUPITER] = ASTRE_JUPITER;
+            astres_aspect[SATURN] = ASTRE_SATURN;
+            astres_aspect[URANUS] = ASTRE_URANUS;
+            astres_aspect[NEPTUNE] = ASTRE_NEPTUNE;
+            astres_aspect[PLUTON] = ASTRE_PLUTON;
+            astres_aspect[NOEUD_LUNAIRE] = ASTRE_NOEUD_LUNAIRE;
+            astres_aspect[CHIRON] = ASTRE_CHIRON;
+            astres_aspect[CERES] = ASTRE_CERES;
+            astres_aspect[NOEUD_LUNAIRE_SUD] = ASTRE_NOEUD_LUNAIRE_SUD;
+            astres_aspect[NOEUD_LUNAIRE_SUD + 1] = 98;
+            astres_aspect[NOEUD_LUNAIRE_SUD + 2] = 99;
+            // aspect_option
+            string s;
+            s = s.assign(aspect_option);
+            auto end = s.cend();
+            auto start = end;
+            vector<string> v_aspect_option;
+            for (auto it = s.cbegin(); it != end; ++it) {
+                if (*it != ',') {
+                    if (start == end)
+                        start = it;
+                    continue;
                 }
-                const char* res2 = asset_bodie(astres[i]);
-                if (res2 != nullptr) {
-                    string a_bodie(res2);
-                    js["bodie"][i]["asset"] = a_bodie;
-                } else {
-                    js["bodie"][i]["asset"] = Json::Value::null;
-                }
-                js["bodie"][i]["top"] = i * 25;
-                if (i == 99) {
-                    js["bodie"][i]["left"] = ((i - 1) * 25) + 1; // Mc sous Asc dans la présentation
-                } else {
-                    js["bodie"][i]["left"] = (i * 25) + 1; // 1 pixel de décalage pour que la bordure ne soit pas a l'extérieur du svg
+                if (start != end) {
+                    v_aspect_option.emplace_back(start, it);
+                    start = end;
                 }
             }
+            if (start != end)
+                v_aspect_option.emplace_back(start, end);
+            //
+
+
+
+            for (int i = 0; i < MAX_ASTRES + 2; ++i) {
+                bool sw_i = false;
+                for (auto& l : v_aspect_option) {
+                    if (stoi(l) == astres_aspect[i]) {
+                        sw_i = true;
+                        break;
+                    }
+                }
+                if (sw_i) {
+                    js["bodie"][i]["id"] = astres[i];
+                    const char* res1 = text_bodie(astres[i]);
+                    if (res1 != nullptr) {
+                        string t_bodie(res1);
+                        js["bodie"][i]["name"] = t_bodie;
+                    } else {
+                        js["bodie"][i]["name"] = "";
+                    }
+                    const char* res2 = asset_bodie(astres[i]);
+                    if (res2 != nullptr) {
+                        string a_bodie(res2);
+                        js["bodie"][i]["asset"] = a_bodie;
+                    } else {
+                        js["bodie"][i]["asset"] = Json::Value::null;
+                    }
+                    js["bodie"][i]["top"] = i * 25;
+                    if (i == 99) {
+                        js["bodie"][i]["left"] = ((i - 1) * 25) + 1; // Mc sous Asc dans la présentation
+                    } else {
+                        js["bodie"][i]["left"] = (i * 25) + 1; // 1 pixel de décalage pour que la bordure ne soit pas a l'extérieur du svg
+                    }
+                } else {
+                    js["bodie"][i]["id"] = Json::Value::null;
+                    js["bodie"][i]["name"] = Json::Value::null;
+                    js["bodie"][i]["asset"] = Json::Value::null;
+                    js["bodie"][i]["top"] = 0;
+                    js["bodie"][i]["left"] = 0;
+                }
+            }
+            free(astres_aspect);
             break;
         }
     }
