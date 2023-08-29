@@ -122,8 +122,7 @@ using namespace std;
                 if (jsonOutput.length() > static_cast<string::size_type>(numeric_limits<int>::max())) {
                     cerr << "La chaîne json est trop longue pour être traitée par FCGX_PutStr." << endl;
                 } else {
-                    //FCGX_PutStr(jsonOutput.c_str(), static_cast<int>(jsonOutput.length()), request.out);
-                    FCGX_PutStr(aspect_option.c_str(), static_cast<int>(aspect_option.length()), request.out);
+                    FCGX_PutStr(jsonOutput.c_str(), static_cast<int>(jsonOutput.length()), request.out);
                 }
 #endif
                 break;
