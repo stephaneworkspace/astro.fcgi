@@ -789,7 +789,7 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
     return output;
 }
 
-string SweBressaniDevCpp::decodeComa(const string& str) {
+const string SweBressaniDevCpp::decodeComma(const string& str) {
     std::string decoded = "";
     for (size_t i = 0; i < str.length(); ++i) {
         if (i <= str.length() - 3 && str.substr(i, 3) == "%2C") {

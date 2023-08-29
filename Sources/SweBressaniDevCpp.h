@@ -54,7 +54,7 @@ public:
     const string Svg();
     const string Json();
     const string JsonApiV2(JsonApiV2Option option);
-    static string decodeComa(const string& str);
+    static const string decodeComma(const string& str);
 private:
     static float getZnorm(float angle);
     static float getClosestDistance(float angle1, float angle2);
