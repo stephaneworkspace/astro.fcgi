@@ -550,10 +550,6 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
                 const char* svgr1 = sweinterfacelib::asset_bodie_r(i);
                 js["astre"][j]["astre_r"]["asset"][0] = svgr0;
                 js["astre"][j]["astre_r"]["asset"][1] = svgr1;
-                js["astre"][j]["line"]["lx1"] = paa[i].line.lx1;
-                js["astre"][j]["line"]["ly1"] = paa[i].line.ly1;
-                js["astre"][j]["line"]["lx2"] = paa[i].line.lx2;
-                js["astre"][j]["line"]["ly2"] = paa[i].line.ly2;
                 j++;
             }
             break;
