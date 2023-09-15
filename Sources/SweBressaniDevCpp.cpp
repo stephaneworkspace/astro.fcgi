@@ -169,7 +169,7 @@ const string SweBressaniDevCpp::Json() {
         js["bodie"][i]["sign"]["id"] = calcul_ut.split.sign;
         string sign = Sign::nom(calcul_ut.split.sign + 1);
         js["bodie"][i]["sign"]["nom"] = sign;
-        js["bodie"][i]["sign"]["asset"] = asset_sign(calcul_ut.split.sign + 1);
+        js["bodie"][i]["sign"]["asset"] = asset_sign(calcul_ut.split.sign + 1, color);
         CalcUt calcul_ut_t= Swe03::calc_ut(utc_to_jd_t.julian_day_ut, astres[i], OPTION_FLAG_SPEED);
         js["bodie"][i]["deg_min_sec_transit"] = calcul_ut_t.split.print;
         js["bodie"][i]["deg_transit"] = calcul_ut_t.split.deg;
@@ -178,7 +178,7 @@ const string SweBressaniDevCpp::Json() {
         js["bodie"][i]["sign_transit"]["id"] = calcul_ut_t.split.sign;
         string sign_transit = Sign::nom(calcul_ut_t.split.sign + 1);
         js["bodie"][i]["sign_transit"]["nom"] = sign_transit;
-        js["bodie"][i]["sign_transit"]["asset"] = asset_sign(calcul_ut_t.split.sign + 1);
+        js["bodie"][i]["sign_transit"]["asset"] = asset_sign(calcul_ut_t.split.sign + 1, color);
     }
     // Bodies angle
     //int* astresAngle = new int[MAX_ASTRES + 2];
@@ -517,8 +517,8 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
                 js["signe"][j]["height"] = pas[i].height;
                 js["signe"][j]["x"] = pas[i].x;
                 js["signe"][j]["y"] = pas[i].y;
-                string svgh0 = sweinterfacelib::asset_sign(i);
-                string svgh1 = sweinterfacelib::asset_sign(i);
+                string svgh0 = sweinterfacelib::asset_sign(i, color);
+                string svgh1 = sweinterfacelib::asset_sign(i, color);
                 js["signe"][j]["asset"][0] = svgh0;
                 js["signe"][j]["asset"][1] = svgh1;
                 string nom = "TODO"; // TODO
