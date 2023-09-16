@@ -724,7 +724,7 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
         case JsonApiV2Option::JsonAspectsAsset:
         {
             for (int i = 0; i < ASPECTS_SEMISEXTILE ; ++i) {
-                const char* res1 = asset_aspect(i);
+                const char* res1 = asset_aspect2(i, color);
                 if (res1 != nullptr) {
                     string a_aspect(res1);
                     js["aspect"][i]["asset"] = a_aspect;
