@@ -694,7 +694,7 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
                     CalcUt calcul_ut = Swe03::calc_ut(utc_to_jd.julian_day_ut, astresAngle[i], OPTION_FLAG_SPEED);
                     loni = calcul_ut.longitude;
                 }
-                js["aspect"][i]["lon"] = loni;
+                // js["aspect"][i]["lon"] = loni;
                 int k = 0;
                 for (int j = i + 1; j < MAX_ASTRES + 2; j++) {
                     js["aspect"][i]["liens"][k]["id"] = astresAngle[j];
@@ -735,13 +735,49 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
                             CalcUt calcul_ut = Swe03::calc_ut(utc_to_jd.julian_day_ut, astresAngle[j], OPTION_FLAG_SPEED);
                             lonj = calcul_ut.longitude;
                         }
-                        js["aspect"][i]["liens"][k]["lon"] = lonj;
+                        double *lonp = new double[2];
+                        lonp[0] = loni;
+                        lonp[1] = lonj;
+                        LineXYAspect lxya = DrawAspectLines::line(house[0], lonp);
+                        js["aspect"][i]["liens"][k]["lx1"] = lxya.lx1;
+                        js["aspect"][i]["liens"][k]["ly1"] = lxya.ly1;
+                        js["aspect"][i]["liens"][k]["lx2"] = lxya.lx2;
+                        js["aspect"][i]["liens"][k]["ly2"] = lxya.ly2;
+                        free(lonp);
+                        const char* res2 = text_aspect(value.aspect);
+                        if (res2 != nullptr) {
+                            string t_aspect(res2);
+                            js["aspect"][i]["liens"][k]["aspect_name"] = t_aspect;
+                        } else {
+                            js["aspect"][i]["liens"][k]["aspect_name"] = Json::Value::null;
+                        }
+                        int point = type_aspect(value.aspect);
+                        js["aspect"][i]["liens"][k]["aspect_point"] = point;
+                        const char* r_ca = color_aspect2(value.aspect, color);
+                        if (r_ca != nullptr) {
+                            string ca(r_ca);
+                            js["aspect"][i]["liens"][k]["color"] = ca;
+                        } else {
+                            if (color == 1) {
+                                js["aspect"][i]["liens"][k]["color"] = "#ffffff";
+                            } else {
+                                js["aspect"][i]["liens"][k]["color"] = "#000000";
+                            }
+                        }
+                        //js["aspect"][i]["liens"][k]["lon"] = lonj;
                     } else {
                         js["aspect"][i]["liens"][k]["aspect_id"] = Json::Value::null;
                         //js["aspect"][i]["liens"][k]["aspect_name"] = Json::Value::null;
                         //js["aspect"][i]["liens"][k]["asp"] = Json::Value::null;
                         //js["aspect"][i]["liens"][k]["orb"] = Json::Value::null;
-                        js["aspect"][i]["liens"][k]["lon"] = Json::Value::null;
+                        //js["aspect"][i]["liens"][k]["lon"] = Json::Value::null;
+                        js["aspect"][i]["liens"][k]["lx1"] = Json::Value::null;
+                        js["aspect"][i]["liens"][k]["ly1"] = Json::Value::null;
+                        js["aspect"][i]["liens"][k]["lx2"] = Json::Value::null;
+                        js["aspect"][i]["liens"][k]["ly2"] = Json::Value::null;
+                        js["aspect"][i]["liens"][k]["aspect_name"] = Json::Value::null;
+                        js["aspect"][i]["liens"][k]["aspect_point"] = Json::Value::null;
+                        js["aspect"][i]["liens"][k]["color"] = Json::Value::null;
                     }
                     k++;
                 }
