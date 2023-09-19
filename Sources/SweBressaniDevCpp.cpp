@@ -607,6 +607,8 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
             astresAngle[NOEUD_LUNAIRE_SUD + 1] = 98; // Asc
             astresAngle[NOEUD_LUNAIRE_SUD + 2] = 99; // Mc
 
+            double lon_asc = house[1].longitude;
+            double lon_mc = house[10].longitude;
 
             map<pair<int, int>, AspectApiV2> m;
             for (int i = 0; i < MAX_ASTRES + 2; ++i) {
@@ -624,9 +626,11 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
                             if (astresAngle[j] == 98 || astresAngle[j] == 99) {
                                 // Angle
                                 if (astresAngle[j] == 98) {
-                                    lon2 = house[1].angle; // Asc
+                                    //lon2 = house[1].angle; // Asc
+                                    lon2 = lon_asc;
                                 } else {
-                                    lon2 = house[10].angle; // Mc
+                                    //lon2 = house[10].angle; // Mc
+                                    lon2 = lon_mc;
                                 }
                             } else {
                                 // Astre
@@ -640,9 +644,11 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
                             if (astresAngle[j] == 98 || astresAngle[j] == 99) {
                                 // Angle
                                 if (astresAngle[j] == 98) {
-                                    lon2 = house[1].angle; // Asc
+                                    //lon2 = house[1].angle; // Asc
+                                    lon2 = lon_asc;
                                 } else {
-                                    lon2 = house[10].angle; // Mc
+                                    //lon2 = house[10].angle; // Mc
+                                    lon2 = lon_mc;
                                 }
                             } else {
                                 // Astre
@@ -679,6 +685,16 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
                         js["aspect"][i]["nom"] = "";
                     }
                 }
+                double loni = 0;
+                if (astresAngle[i] == 98) {
+                    loni = lon_asc;
+                } else if (astresAngle[i] == 99) {
+                    loni = lon_mc;
+                } else {
+                    CalcUt calcul_ut = Swe03::calc_ut(utc_to_jd.julian_day_ut, astresAngle[i], OPTION_FLAG_SPEED);
+                    loni = calcul_ut.longitude;
+                }
+                js["aspect"][i]["lon"] = loni;
                 int k = 0;
                 for (int j = i + 1; j < MAX_ASTRES + 2; j++) {
                     js["aspect"][i]["liens"][k]["id"] = astresAngle[j];
@@ -710,11 +726,22 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
                         }*/
                         //js["aspect"][i]["liens"][k]["asp"] = value.asp;
                         //js["aspect"][i]["liens"][k]["orb"] = value.orb;
+                        double lonj = 0;
+                        if (astresAngle[j] == 98) {
+                            lonj = lon_asc;
+                        } else if (astresAngle[j] == 99) {
+                            lonj = lon_mc;
+                        } else {
+                            CalcUt calcul_ut = Swe03::calc_ut(utc_to_jd.julian_day_ut, astresAngle[j], OPTION_FLAG_SPEED);
+                            lonj = calcul_ut.longitude;
+                        }
+                        js["aspect"][i]["liens"][k]["lon"] = lonj;
                     } else {
                         js["aspect"][i]["liens"][k]["aspect_id"] = Json::Value::null;
                         //js["aspect"][i]["liens"][k]["aspect_name"] = Json::Value::null;
                         //js["aspect"][i]["liens"][k]["asp"] = Json::Value::null;
                         //js["aspect"][i]["liens"][k]["orb"] = Json::Value::null;
+                        js["aspect"][i]["liens"][k]["lon"] = Json::Value::null;
                     }
                     k++;
                 }
