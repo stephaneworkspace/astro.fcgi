@@ -738,6 +738,17 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
                 } else {
                     js["aspect"][i]["name"] = Json::Value::null;
                 }
+                const char* r_ca = color_aspect2(i, color);
+                if (r_ca != nullptr) {
+                    string ca(r_ca);
+                    js["aspect"][i]["color"] = ca;
+                } else {
+                    if (color == 1) {
+                        js["aspect"][i]["color"] = "#ffffff";
+                    } else {
+                        js["aspect"][i]["color"] = "#000000";
+                    }
+                }
             }
             break;
         }
