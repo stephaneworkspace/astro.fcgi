@@ -749,6 +749,8 @@ const string SweBressaniDevCpp::JsonApiV2(JsonApiV2Option option) {
                         js["aspect"][i]["color"] = "#000000";
                     }
                 }
+                int point = type_aspect(i);
+                js["aspect"][i]["point"] = point;
             }
             break;
         }
